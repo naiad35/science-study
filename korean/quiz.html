@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중1 국어 예상문제</title>
+<style>
+  :root {
+    --bg:#f4f6fb; --card:#fff; --ink:#1f2430; --sub:#5a6273;
+    --accent:#ff6f3d; --ok:#21b573; --no:#e03131;
+    --line:#e4e8f0; --okbg:#e7f8ef; --nobg:#fdecec; --exbg:#fff3ec;
+  }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body {
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.75; font-size:18px; padding:0 0 80px;
+  }
+  header {
+    background:linear-gradient(135deg,#ff8a3d,#ff5e8a); color:#fff;
+    padding:26px 20px 22px; text-align:center;
+    box-shadow:0 2px 12px rgba(0,0,0,.12);
+  }
+  header h1 { margin:0 0 6px; font-size:21px; }
+  header p { margin:0; font-size:14px; opacity:.92; }
+  .wrap { padding:16px; max-width:720px; margin:0 auto; }
+  .scorebar {
+    position:sticky; top:0; z-index:20;
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:12px 16px; margin-bottom:16px; text-align:center;
+    font-weight:700; box-shadow:0 2px 10px rgba(30,40,80,.06);
+  }
+  .scorebar span { color:var(--accent); }
+  .q {
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-bottom:16px; box-shadow:0 2px 10px rgba(30,40,80,.06);
+  }
+  .qhead { display:flex; gap:8px; align-items:flex-start; margin-bottom:12px; }
+  .qnum {
+    background:var(--accent); color:#fff; font-size:14px; font-weight:700;
+    border-radius:8px; padding:3px 9px; flex-shrink:0; margin-top:2px;
+  }
+  .qtype {
+    font-size:12px; color:var(--sub); border:1px solid var(--line);
+    border-radius:6px; padding:2px 7px; flex-shrink:0; margin-top:2px;
+  }
+  .qtext { font-weight:600; }
+  .opts { margin:6px 0; }
+  .opt {
+    display:block; width:100%; text-align:left;
+    background:#fff; border:1.5px solid var(--line); border-radius:12px;
+    padding:12px 14px; margin:8px 0; font-size:16px; cursor:pointer;
+    transition:.15s; color:var(--ink);
+  }
+  .opt:active { transform:scale(.99); }
+  .opt.sel { border-color:var(--accent); background:#fff0ea; }
+  .opt.correct { border-color:var(--ok); background:var(--okbg); }
+  .opt.wrong { border-color:var(--no); background:var(--nobg); }
+  .opt.disabled { pointer-events:none; opacity:.95; }
+  input[type=text] {
+    width:100%; padding:12px 14px; font-size:16px;
+    border:1.5px solid var(--line); border-radius:12px; margin:6px 0;
+    font-family:inherit;
+  }
+  input[type=text]:focus { outline:none; border-color:var(--accent); }
+  .checkbtn {
+    background:var(--accent); color:#fff; border:none; border-radius:12px;
+    padding:11px 20px; font-size:15px; font-weight:700; cursor:pointer;
+    margin-top:6px;
+  }
+  .checkbtn:disabled { opacity:.5; }
+  .result { font-weight:700; margin:12px 0 6px; font-size:16px; display:none; }
+  .result.ox-ok { color:var(--ok); }
+  .result.ox-no { color:var(--no); }
+  .explain {
+    display:none; background:var(--exbg); border-radius:12px;
+    padding:13px 15px; margin-top:10px; font-size:15px; line-height:1.65;
+  }
+  .explain b { color:var(--accent); }
+  .ansline { font-weight:700; color:var(--ink); margin-bottom:4px; }
+  .oxrow { display:flex; gap:10px; margin:6px 0; }
+  .oxbtn {
+    flex:1; padding:14px; font-size:17px; font-weight:700; cursor:pointer;
+    border:1.5px solid var(--line); border-radius:12px; background:#fff; color:var(--ink);
+  }
+  .oxbtn.sel { border-color:var(--accent); background:#fff0ea; }
+  .oxbtn.correct { border-color:var(--ok); background:var(--okbg); }
+  .oxbtn.wrong { border-color:var(--no); background:var(--nobg); }
+  .oxbtn.disabled { pointer-events:none; }
+  .note { text-align:center; color:var(--sub); font-size:13px; margin:24px 16px 0; line-height:1.6; }
+  .resetbtn {
+    display:block; margin:18px auto 0; background:#fff; border:1px solid var(--line);
+    color:var(--accent); font-weight:700; font-size:14px; padding:10px 22px;
+    border-radius:30px; cursor:pointer;
+  }
+  .backbtn {
+    display:block; margin:12px auto 0; color:var(--sub); font-size:14px; text-align:center;
+    text-decoration:none;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>📝 중1 국어 예상문제</h1>
+  <p>보기를 누르면 바로 채점 · 해설 자동 표시</p>
+</header>
+
+<div class="wrap">
+  <div class="scorebar" id="scorebar">푼 문제 <span id="done">0</span> / <span id="total">0</span> · 맞은 개수 <span id="score">0</span></div>
+  <div id="quiz"></div>
+  <button class="resetbtn" id="resetBtn">🔄 다시 풀기</button>
+  <a class="backbtn" href="./">← 국어 메뉴로</a>
+  <p class="note">
+    천재교육 중1 국어 · 1단원 성찰하며 성장하며 · 2단원 소통의 열쇠 (14~97쪽) 기준.<br>
+    ※ 작품 세부 내용이 추가되면 문제도 더 늘려줄게요. 파이팅! 💪
+  </p>
+</div>
+
+<script>
+const quiz = [
+  /* ===================== 1단원. 성찰하며 성장하며 ===================== */
+  {
+    type:"객관식", unit:"문학-시",
+    q:"시에서 말하는 사람, 즉 시 속에서 생각이나 감정을 전하는 이를 무엇이라고 하는가?",
+    opts:["작가","화자","서술자","등장인물"],
+    answer:1,
+    ex:"시에서 말하는 사람은 <b>화자(말하는 이)</b>입니다. 소설에서 이야기를 전달하는 '서술자'와 구별해야 해요. 화자는 실제 작가와 같을 수도, 다를 수도 있습니다."
+  },
+  {
+    type:"객관식", unit:"문학-시",
+    q:"사람이 아닌 대상을 사람처럼 표현하는 방법은?",
+    opts:["직유법","은유법","의인법","과장법"],
+    answer:2,
+    ex:"사람이 아닌 것을 사람처럼 나타내는 표현법은 <b>의인법</b>입니다. (예: '바람이 속삭인다') 직유법은 '~같이/~처럼', 은유법은 'A는 B다' 형태로 빗대는 표현이에요."
+  },
+  {
+    type:"객관식", unit:"문학-시",
+    q:"'~처럼', '~같이', '~듯이'를 사용해 두 대상을 직접 빗대어 표현하는 방법은?",
+    opts:["직유법","은유법","의인법","반복법"],
+    answer:0,
+    ex:"<b>직유법</b>은 '~처럼, ~같이, ~듯이'로 두 대상을 직접 견주어 표현해요. (예: '쟁반같이 둥근 달') 연결어 없이 'A는 B다'로 표현하면 은유법입니다."
+  },
+  {
+    type:"단답형", unit:"문학-시",
+    q:"시에서 운율(리듬감)을 만들기 위해 같거나 비슷한 말을 되풀이하는 표현 방법은? (○○법)",
+    accept:["반복","반복법"],
+    display:"반복법",
+    ex:"<b>반복법</b>입니다. 같은 말·구절·문장을 되풀이해 운율을 만들고 의미를 강조해요. 시에서 리듬감(운율)을 형성하는 대표적인 방법입니다."
+  },
+  {
+    type:"OX", unit:"문학-소설",
+    q:"소설에서 이야기를 전달해 주는 사람을 '서술자'라고 한다.",
+    answer:true,
+    ex:"맞습니다. 소설에서 이야기를 들려주는 이는 <b>서술자</b>예요. 시의 '화자'에 해당하는 역할로, 작가가 설정한 존재입니다."
+  },
+
+  /* ============== 작품: 딱지 (이준관) ============== */
+  {
+    type:"객관식", unit:"딱지",
+    q:"시 「딱지」의 말하는 이(화자)에 대한 설명으로 적절하지 <u>않은</u> 것은?",
+    opts:[
+      "어린 시절의 '나'는 걸핏하면 넘어졌다.",
+      "현재의 '나'는 사람들로 인해 마음의 상처를 받고 있다.",
+      "어린 시절의 '나'는 무릎에 생긴 딱지를 보기 싫어했다.",
+      "현재의 '나'는 딱지가 새살을 키운다는 아버지의 말씀을 이해하고 있다.",
+      "어린 시절의 '나'는 딱지를 떼지 말라는 아버지의 말을 따르지 않았다."
+    ],
+    answer:4,
+    ex:"어린 '나'는 아버지 말씀대로 딱지를 그대로 <b>놓아두었고</b>, 그 결과 새살이 돋았어요. 따라서 '말을 따르지 않았다'는 ⑤가 적절하지 않습니다."
+  },
+  {
+    type:"객관식", unit:"딱지",
+    q:"이 시를 시간의 흐름(과거 → 현재)에 따라 둘로 나눌 때, '현재' 부분이 시작되는 지점으로 알맞은 것은?",
+    opts:[
+      "\"나는 어릴 때부터 그랬다\"",
+      "\"그 흉물 같은 딱지가 보기 싫어\"",
+      "\"지금도 칠칠치 못한 나는\"",
+      "\"까만 고약 같은 딱지가 떨어지고\"",
+      "\"하얀 새살이 돋아나 있었다\""
+    ],
+    answer:2,
+    ex:"앞부분은 <b>어린 시절(과거)</b> 무릎의 딱지, 뒷부분은 <b>어른이 된 현재</b> 마음의 딱지 이야기예요. \"<b>지금도</b> 칠칠치 못한 나는~\"에서 현재로 전환됩니다."
+  },
+  {
+    type:"객관식", unit:"딱지",
+    q:"밑줄 친 시어·구절에 대한 설명으로 적절하지 <u>않은</u> 것은?",
+    opts:[
+      "'어린 시절의 나'는 자주 넘어지는 아이였다.",
+      "아버지의 말씀은 딱지를 떼어 내지 말라는 것이다.",
+      "'지금도 ~ 나'는 어른이 된 현재의 '나'를 가리킨다.",
+      "'마음에 딱지'는 몸(무릎)에 생긴 상처만을 가리킨다.",
+      "'새살'은 성숙 또는 성장을 가리킨다."
+    ],
+    answer:3,
+    ex:"'마음에 딱지'는 몸의 상처가 아니라, 살면서 사람들과 부딪혀 입는 <b>마음의 상처</b>를 뜻해요. 그래서 ④가 적절하지 않습니다."
+  },
+  {
+    type:"객관식", unit:"딱지",
+    q:"이 시에서 운율(리듬감)을 형성한 방법으로 가장 알맞은 것은?",
+    opts:[
+      "일정한 글자 수를 반복하고 있다.",
+      "의성어와 의태어를 사용하고 있다.",
+      "한 행을 규칙적으로 끊어 읽고 있다.",
+      "같거나 유사한 시구(말)를 반복하고 있다.",
+      "처음과 끝을 비슷한 형태로 구성하고 있다."
+    ],
+    answer:3,
+    ex:"\"딱지를 떼지 말아라\"처럼 <b>비슷한 시구가 반복</b>되며 운율이 생기고 주제가 강조돼요. 반복은 시에서 운율을 만드는 대표적인 방법입니다."
+  },
+  {
+    type:"객관식", unit:"딱지",
+    q:"이 시에서 '딱지'와 '새살'이 상징하는 의미를 바르게 짝지은 것은?",
+    opts:[
+      "딱지=기쁨 / 새살=슬픔",
+      "딱지=상처(아픔) / 새살=성장·치유",
+      "딱지=게으름 / 새살=부지런함",
+      "딱지=거짓 / 새살=진실",
+      "딱지=돈 / 새살=명예"
+    ],
+    answer:1,
+    ex:"딱지는 <b>상처(아픔)</b>를, 새살은 그 아픔을 견딘 뒤 돋는 <b>성장·치유</b>를 상징해요."
+  },
+  {
+    type:"객관식", unit:"딱지",
+    q:"\"딱지를 떼어 내지 말아라 그래야 낫는다\"라는 아버지 말씀에 담긴 뜻으로 알맞은 것은?",
+    opts:[
+      "딱지가 보기에 예뻐서 두라는 것",
+      "딱지를 그대로 두어야 새살이 돋아 상처가 낫기 때문",
+      "딱지를 모아 두려는 것",
+      "떼는 방법을 모르기 때문",
+      "딱지가 비싸기 때문"
+    ],
+    answer:1,
+    ex:"딱지를 억지로 떼면 상처가 제대로 낫지 않아요. 그대로 두어야 그 아래에서 <b>새살이 돋아 낫기</b> 때문에 떼지 말라고 하신 거예요."
+  },
+  {
+    type:"단답형", unit:"딱지",
+    q:"이 시에서 아픔(상처)을 견딘 뒤에 돋아나는 것으로, 성장·치유를 상징하는 두 글자 시어는?",
+    accept:["새살","새 살"],
+    display:"새살",
+    ex:"<b>새살</b>입니다. '딱지가 새살을 키운다'처럼, 상처를 견뎌 내야 성장(새살)이 이루어진다는 것이 주제예요."
+  },
+  {
+    type:"OX", unit:"딱지",
+    q:"이 시는 '무릎의 딱지(과거)'에서 '마음의 딱지(현재)'로 의미가 확장되는 구조이다.",
+    answer:true,
+    ex:"맞습니다. 어린 시절 몸의 상처(무릎 딱지) 경험이, 어른이 된 뒤 <b>마음의 상처를 견디는 지혜</b>로 확장돼요."
+  },
+  {
+    type:"객관식", unit:"쓰기",
+    q:"진솔한 글을 쓰기 위한 태도로 가장 알맞은 것은?",
+    opts:["남의 글을 그대로 베껴 쓴다.","자신의 경험과 생각, 감정을 솔직하게 담는다.","어려운 한자어만 골라 쓴다.","사실과 다르게 과장해서 꾸민다."],
+    answer:1,
+    ex:"진솔한 글쓰기는 <b>자신의 경험·생각·감정을 솔직하게</b> 표현하는 거예요. 꾸미거나 과장하지 않고, 겪은 일을 진실하게 담을 때 읽는 사람에게 감동을 줍니다."
+  },
+
+  /* ===================== 2단원. 소통의 열쇠 ===================== */
+  {
+    type:"객관식", unit:"매체",
+    q:"신문, 텔레비전, 인터넷처럼 많은 사람에게 정보를 전달하는 수단을 무엇이라고 하는가?",
+    opts:["대중매체","개인일기","사전","교과서"],
+    answer:0,
+    ex:"<b>대중매체</b>는 많은 사람에게 동시에 정보를 전달하는 수단이에요. 신문·방송·인터넷 등이 있고, 누구나 정보를 주고받을 수 있는 인터넷 방송도 여기에 포함됩니다."
+  },
+  {
+    type:"객관식", unit:"매체",
+    q:"인터넷에 올라온 정보를 받아들일 때 바람직한 태도는?",
+    opts:["모든 정보를 무조건 믿는다.","출처와 사실 여부를 확인하며 비판적으로 본다.","조회수가 높으면 다 사실이다.","자극적인 제목만 보고 판단한다."],
+    answer:1,
+    ex:"인터넷 정보는 <b>출처와 사실 여부를 확인하며 비판적으로</b> 받아들여야 해요. 허위조작정보(가짜뉴스)에 속지 않으려면 믿을 만한 출처인지 따져 보는 태도가 중요합니다."
+  },
+  {
+    type:"단답형", unit:"매체",
+    q:"사실이 아닌 내용을 사실인 것처럼 꾸며 퍼뜨리는 거짓 정보를 가리키는 말은? (○○조작정보)",
+    accept:["허위","허위조작정보","허위조작"],
+    display:"허위조작정보",
+    ex:"<b>허위조작정보</b>(가짜뉴스)입니다. 사실이 아닌 것을 사실처럼 퍼뜨려 혼란을 주므로, 출처 확인과 비판적 사고로 현명하게 대응해야 해요."
+  },
+  {
+    type:"단답형", unit:"듣기·말하기",
+    q:"발화가 둘 이상 모여 이루어진, 말의 더 큰 단위를 무엇이라고 하는가?",
+    accept:["담화"],
+    display:"담화",
+    ex:"<b>담화</b>입니다. '발화'는 구체적인 의사소통 상황에서 실현된 문장 하나이고, 발화가 둘 이상 모이면 '담화'가 돼요."
+  },
+  {
+    type:"객관식", unit:"듣기·말하기",
+    q:"같은 말이라도 상황(언제·어디서·누가·왜)에 따라 다른 의도로 해석되게 하는 요소는?",
+    opts:["맥락","어휘","띄어쓰기","억양 표기"],
+    answer:0,
+    ex:"<b>맥락</b>입니다. 예를 들어 \"조금 시끄럽지 않니?\"라는 같은 말도 도서관(조용히 해 달라는 지시)과 카페 앞(다른 곳으로 가자는 요청)에서 다른 의도로 해석돼요."
+  },
+  {
+    type:"객관식", unit:"듣기·말하기",
+    q:"다음 중 '간접 발화'의 예로 가장 알맞은 것은?",
+    opts:["\"창문 좀 닫아 줄래?\"","\"책 좀 줘.\"","\"방 안이 좀 춥지 않니?\"","\"저기 의자로 가 줘.\""],
+    answer:2,
+    ex:"<b>간접 발화</b>는 의도를 돌려서 표현하는 거예요. \"방 안이 좀 춥지 않니?\"는 겉으로는 날씨를 묻지만 실제로는 '창문을 닫아 달라/보일러를 켜 달라'는 요청을 돌려 말한 것이에요. 나머지는 의도를 그대로 직접 표현한 <b>직접 발화</b>입니다."
+  },
+  {
+    type:"객관식", unit:"듣기·말하기",
+    q:"'추론하며 듣기'의 뜻으로 가장 알맞은 것은?",
+    opts:["들리는 말을 그대로 받아 적기","말에 직접 드러나지 않은 의도나 숨은 뜻을 짐작하며 듣기","소리의 크기만 집중해서 듣기","말을 끊고 내 생각만 말하기"],
+    answer:1,
+    ex:"<b>추론하며 듣기</b>는 말에 직접 드러나지 않은 <b>의도·숨은 뜻·상황</b>을 근거를 바탕으로 짐작하며 듣는 거예요. 라디오 캠페인의 의도를 파악하는 활동이 그 예입니다."
+  },
+  {
+    type:"OX", unit:"듣기·말하기",
+    q:"추론하며 들을 때는 말하는 이의 표정, 상황, 말투 같은 단서도 함께 살펴야 한다.",
+    answer:true,
+    ex:"맞습니다. 추론하며 들을 때는 <b>말의 내용뿐 아니라 상황·말투·표정 같은 단서</b>를 함께 활용해 숨은 의도를 짐작해야 정확하게 이해할 수 있어요."
+  },
+
+  /* ============== 작품: 오후 4시, 달고나 (이송현) ============== */
+  {
+    type:"객관식", unit:"달고나",
+    q:"「오후 4시, 달고나」의 주인공 '서율'이 달고나를 완벽하게 만들려고 한 까닭은?",
+    opts:["요리 대회에 나가려고","짝사랑하는 한승규가 달고나를 좋아해서","할아버지가 사 오라고 해서","엄마의 가게에서 팔려고","상품을 받으려고"],
+    answer:1,
+    ex:"서율은 짝사랑 상대인 <b>한승규가 달고나를 좋아한다</b>는 걸 알고, 직접 만들어 주고 싶어서 완벽한 달고나에 집착해요."
+  },
+  {
+    type:"객관식", unit:"달고나",
+    q:"서율에 대한 설명으로 적절하지 <u>않은</u> 것은?",
+    opts:[
+      "한승규를 짝사랑하고 있다.",
+      "눈매가 웃는 모양이라 화가 나도 웃는 것처럼 보인다.",
+      "치매를 앓는 할아버지와 함께 산다.",
+      "처음부터 승규가 규리를 좋아하는 것을 알고 응원했다.",
+      "승규가 규리를 좋아한다는 말을 듣고 상처받는다."
+    ],
+    answer:3,
+    ex:"서율은 승규를 짝사랑했기에, 승규가 규리를 좋아한다는 사실에 <b>상처</b>를 받아요. 처음부터 알고 응원한 게 아니므로 ④가 적절하지 않습니다."
+  },
+  {
+    type:"객관식", unit:"달고나",
+    q:"작품에서 '달고나'가 상징하는 것으로 가장 알맞은 것은?",
+    opts:["가족 간의 다툼","달콤하면서도 씁쓸한 첫사랑","학교 성적에 대한 부담","미래에 대한 희망","친구와의 우정"],
+    answer:1,
+    ex:"달고나는 설탕과 베이킹 소다의 비율이 어긋나면 쓴맛이 나요. 이는 뜻대로 되지 않는 <b>달콤씁쓸한 첫사랑</b>을 상징합니다."
+  },
+  {
+    type:"객관식", unit:"달고나",
+    q:"한승규가 서율에게 고백한 내용은?",
+    opts:["달고나 만드는 법을 알려 달라","규리가 자신(승규)의 첫사랑이다","봉사 활동을 대신해 달라","할아버지를 소개해 달라","공부를 가르쳐 달라"],
+    answer:1,
+    ex:"한승규는 서율의 단짝인 <b>규리가 자신의 첫사랑</b>이라고 고백해요. 승규가 자신을 좋아하는 게 아니라 규리를 좋아한다는 사실에 서율은 큰 상처를 받습니다."
+  },
+  {
+    type:"객관식", unit:"달고나",
+    q:"\"나는 울었고 할아버지는 웃었다\"라는 마지막 장면에 대한 설명으로 적절하지 <u>않은</u> 것은?",
+    opts:[
+      "서율의 눈물과 할아버지의 웃음이 대비된다.",
+      "서율은 첫사랑의 실패로 슬퍼하고 있다.",
+      "할아버지는 기억을 잃어 천진하게 웃고 있다.",
+      "서율이 할아버지에게 크게 화를 내는 장면이다.",
+      "애틋한 여운을 남기며 작품을 마무리한다."
+    ],
+    answer:3,
+    ex:"이 장면은 화를 내는 게 아니라, 실연한 서율의 눈물과 기억을 잃은 할아버지의 웃음이 <b>대비</b>되며 애틋함을 남겨요. ④가 적절하지 않습니다."
+  },
+  {
+    type:"객관식", unit:"달고나",
+    q:"실연한 서율에게 치매를 앓는 할아버지가 건넨 위로의 말은?",
+    opts:["\"공부나 열심히 해라.\"","\"넌 좋은 애야.\"","\"달고나는 원래 쓴 거야.\"","\"승규는 잊어버려.\"","\"다 네 탓이다.\""],
+    answer:1,
+    ex:"할아버지는 \"<b>넌 … 좋은 애야</b>\"라고 위로해요. 기억은 잃었어도 손녀를 향한 사랑은 남아 있음을 보여주는 장면이에요."
+  },
+  {
+    type:"단답형", unit:"달고나",
+    q:"서율이 실연의 아픔을 받아들이고 성장한 순간이자, 할아버지가 아빠를 기다리던 시각으로 제목에도 쓰인 시간은? (오후 ○시)",
+    accept:["4","4시","오후 4시","네","네시"],
+    display:"오후 4시",
+    ex:"<b>오후 4시</b>입니다. 할아버지가 창가에서 아빠를 기다리던 시간이자, 서율이 첫사랑의 실패를 받아들이고 '좋은 애로 살기로' 결심한 성장의 순간이에요."
+  },
+  {
+    type:"OX", unit:"달고나",
+    q:"서율은 눈매가 웃는 모양이라, 화가 나도 눈이 웃는 것처럼 보여서 고민한다.",
+    answer:true,
+    ex:"맞습니다. 서율은 눈꼬리가 곡선으로 휘어 있어 <b>화를 내도 웃는 것처럼</b> 보여요. 속마음과 겉모습이 다르게 보이는 특징이 작품 곳곳에서 쓰여요."
+  },
+  {
+    type:"OX", unit:"달고나",
+    q:"작품 마지막에서 서율은 울고, 할아버지는 환하게 웃는 모습이 대비되어 나타난다.",
+    answer:true,
+    ex:"맞습니다. 첫사랑을 잃은 서율은 울고, 기억을 잃은 할아버지는 환하게 웃어요. 이 <b>대비</b>가 애틋함과 여운을 깊게 남깁니다."
+  },
+
+  /* ============== 노랫말: 우리의 꿈 (이원희 작사) ============== */
+  {
+    type:"객관식", unit:"우리의 꿈",
+    q:"「우리의 꿈」 노랫말에 드러난 '나'의 성장 과정 순서로 알맞은 것은?",
+    opts:["꿈을 품음 → 용기를 냄 → 시련 속에서도 함께 도전 → 희망으로 밝은 내일로","성공 → 포기 → 좌절","부자가 됨 → 유명해짐 → 은퇴","여행 → 휴식 → 귀가"],
+    answer:0,
+    ex:"어린 시절 <b>꿈</b>을 품고 → <b>용기</b>를 내어 → 외로움·시련 속에서도 <b>친구들과 함께 도전</b>하고 → <b>희망</b>을 품고 밝은 내일로 나아가요."
+  },
+  {
+    type:"객관식", unit:"우리의 꿈",
+    q:"이 노랫말에서 '거센 바람'과 '높은 파도'가 뜻하는 것으로 알맞은 것은?",
+    opts:["즐거운 휴식","꿈을 이루는 과정에서 만나는 시련·어려움","아름다운 자연 풍경","여행의 설렘"],
+    answer:1,
+    ex:"'거센 바람'과 '높은 파도'는 꿈을 향해 나아갈 때 만나는 <b>시련과 어려움</b>을 빗댄 표현이에요. 그래도 두렵지 않다고 노래해요."
+  },
+  {
+    type:"단답형", unit:"우리의 꿈",
+    q:"빈칸 채우기: '나'는 꿈을 이루고자 ○○을/를 내 보려고 한다. (두 글자)",
+    accept:["용기"],
+    display:"용기",
+    ex:"<b>용기</b>입니다. '넌 할 수 있어'라는 마음의 속삭임에 용기를 내어 꿈에 도전해요."
+  },
+  {
+    type:"단답형", unit:"우리의 꿈",
+    q:"빈칸 채우기: 희망을 품고 나아가면 밝은 ○○이/가 다가올 것이라 믿는다. (두 글자)",
+    accept:["내일","미래"],
+    display:"내일",
+    ex:"<b>내일</b>입니다. 시련이 있어도 희망을 품고 나아가면 '밝은 내일'이 온다고 노래해요."
+  },
+  {
+    type:"OX", unit:"우리의 꿈",
+    q:"「우리의 꿈」은 '나' 혼자가 아니라 '너와 나, 우리'가 함께 꿈에 도전하는 내용을 담고 있다.",
+    answer:true,
+    ex:"맞습니다. '너와 나 두 손을 잡고', '우리들 모두의 꿈을 모아서'처럼 <b>함께</b> 도전하는 마음을 강조해요."
+  },
+
+  /* ============== 1단원 마무리: 어휘 · 한자성어 ============== */
+  {
+    type:"객관식", unit:"글쓰기",
+    q:"'경험과 정서를 담은 글쓰기'에서 '정서'의 뜻으로 알맞은 것은?",
+    opts:["글자 수를 세는 것","마음에 일어나는 여러 가지 감정","글씨를 바르게 쓰는 것","사실만 정확히 적는 것","문법에 맞게 쓰는 것"],
+    answer:1,
+    ex:"<b>정서</b>는 사람의 마음에 일어나는 여러 가지 감정(설렘·당황·기쁨 등)이에요. 경험하며 느낀 정서를 솔직하게 담는 것이 진솔한 글쓰기예요."
+  },
+  {
+    type:"객관식", unit:"글쓰기",
+    q:"경험과 정서를 담은 글의 '유형(형식)'에 대한 설명으로 알맞은 것은?",
+    opts:[
+      "반드시 수필 형식으로만 써야 한다.",
+      "수필·편지·일기 등 표현하기에 알맞은 형식을 골라 쓸 수 있다.",
+      "시 형식으로만 써야 한다.",
+      "형식 없이 아무렇게나 써야 한다.",
+      "설명문 형식으로만 써야 한다."
+    ],
+    answer:1,
+    ex:"경험·정서를 담은 글은 형식이 하나로 정해져 있지 않아요. <b>수필·편지·일기</b> 등 자신의 경험과 정서를 표현하기에 알맞은 형식을 골라 쓰면 됩니다."
+  },
+  {
+    type:"단답형", unit:"글쓰기",
+    q:"예시 글 「튼튼이가 내게 준 선물」처럼, 겪은 일과 그때의 느낌을 자유롭게 적는 글의 형식(갈래)은?",
+    accept:["수필","수필형식","수필 형식"],
+    display:"수필",
+    ex:"<b>수필</b>입니다. 겪은 일과 느낀 점을 자유롭게 쓰는 글이에요. 편지·일기도 경험과 정서를 담는 형식이 될 수 있어요."
+  },
+  {
+    type:"객관식", unit:"글쓰기",
+    q:"경험과 정서를 진솔하게 표현한 글의 효과로 알맞지 <u>않은</u> 것은?",
+    opts:["글쓴이가 자신을 성찰하며 건강한 자아를 형성한다.","읽는 이가 감동과 즐거움을 느낀다.","글쓴이가 자신을 돌아보게 된다.","남의 경험을 똑같이 베껴 쓰게 된다."],
+    answer:3,
+    ex:"진솔한 글쓰기는 <b>자신의</b> 경험·정서를 솔직하게 담는 거예요. 남의 경험을 베끼는 것과는 거리가 멀어요. 글쓴이는 성찰을, 읽는 이는 감동을 얻습니다."
+  },
+  {
+    type:"단답형", unit:"글쓰기",
+    q:"'진실하고 솔직하다'는 뜻의, 경험·정서를 담은 글쓰기에서 강조하는 세 글자 낱말은? (○○하다)",
+    accept:["진솔","진솔하다"],
+    display:"진솔(하다)",
+    ex:"<b>진솔하다</b>입니다. 경험과 정서를 꾸미지 않고 진실하고 솔직하게 표현하는 것이 이 단원의 핵심이에요."
+  },
+  {
+    type:"객관식", unit:"글쓰기",
+    q:"예시 글 「튼튼이가 내게 준 선물」에서 글쓴이(준서)가 얻은 깨달음으로 알맞은 것은?",
+    opts:["식물은 키우기 어려우니 포기해야 한다.","대상의 특성에 맞게 보살피고, 사람 관계도 상대 입장을 배려해야 한다.","선물은 비싼 것이 좋다.","혼자 지내는 것이 편하다."],
+    answer:1,
+    ex:"준서는 식물도 <b>특성에 맞게 보살펴야</b> 하고, 사람 관계도 <b>상대의 입장에서 관심을 가지고 살펴야</b> 한다는 걸 깨달아요. '나도 한 뼘 자랐다'고 표현하죠."
+  },
+  {
+    type:"단답형", unit:"어휘",
+    q:"초성 뜻풀이: '놀라거나 다급하여 어찌할 바를 몰라 하는 데가 있다'는 뜻의 낱말은? (ㄷㅎㅅㄹㄷ)",
+    accept:["당황스럽다","당황"],
+    display:"당황스럽다",
+    ex:"<b>당황스럽다</b>입니다. 튼튼이가 시들었을 때 준서가 느낀 감정이에요."
+  },
+  {
+    type:"객관식", unit:"어휘",
+    q:"빈칸에 알맞은 단어는? \"꾸준한 훈련을 거치며 (　)을 거듭했다.\"",
+    opts:["급등","성장","복원","숙련"],
+    answer:1,
+    ex:"<b>성장</b>은 자라서 점점 커지거나 발전함을 뜻해요. '성장을 거듭했다'가 자연스러워요."
+  },
+  {
+    type:"객관식", unit:"어휘",
+    q:"빈칸에 알맞은 단어는? \"자신의 삶을 꾸준하게 (　)하면 깨달음을 얻을 수 있다.\"",
+    opts:["복원","성찰","급등","숙련"],
+    answer:1,
+    ex:"<b>성찰</b>은 자신을 돌아보며 깊이 살피는 것이에요. 삶을 성찰하면 깨달음을 얻을 수 있어요."
+  },
+  {
+    type:"객관식", unit:"어휘",
+    q:"빈칸에 알맞은 단어는? \"청소년기에 올바른 가치관을 (　)하는 것이 중요하다.\"",
+    opts:["숙련","내면화","급등","복원"],
+    answer:1,
+    ex:"<b>내면화</b>는 가치나 생각을 자기 것으로 받아들이는 것이에요. 가치관을 내면화한다고 표현해요."
+  },
+  {
+    type:"객관식", unit:"한자성어",
+    q:"\"나날이 다달이 자라거나 발전함\"을 뜻하는 한자성어는?",
+    opts:["일취월장(日就月將)","대기만성(大器晩成)","심기일전(心機一轉)","유비무환(有備無患)"],
+    answer:0,
+    ex:"<b>일취월장</b>은 '날로 달로 나아간다'는 뜻으로, 나날이 발전함을 이르는 말이에요."
+  },
+  {
+    type:"객관식", unit:"한자성어",
+    q:"\"큰 그릇은 늦게 만들어지듯, 크게 될 사람은 늦게 이루어짐\"을 뜻하는 한자성어는?",
+    opts:["일취월장","대기만성","심기일전","작심삼일"],
+    answer:1,
+    ex:"<b>대기만성</b>(大器晩成)입니다. 큰 그릇을 만드는 데 시간이 오래 걸리듯, 크게 될 사람은 늦게 성공한다는 뜻이에요."
+  },
+  {
+    type:"단답형", unit:"한자성어",
+    q:"\"어떤 계기로 마음가짐을 완전히 바꿈\"을 뜻하는 한자성어는? (心機一轉)",
+    accept:["심기일전","심기일전(心機一轉)"],
+    display:"심기일전(心機一轉)",
+    ex:"<b>심기일전</b>입니다. 어떤 동기로 이제까지의 마음가짐을 버리고 완전히 달라지는 것을 뜻해요."
+  },
+  {
+    type:"단답형", unit:"어휘",
+    q:"빈칸 채우기: 문학 작품을 읽으며 다양한 삶의 모습을 ○○적으로 경험할 수 있다. (보기: 직접/간접)",
+    accept:["간접","간접적"],
+    display:"간접",
+    ex:"<b>간접</b>입니다. 직접 겪기 어려운 삶을 문학으로 <b>간접 경험</b>하며 깨달음과 가치를 얻을 수 있어요."
+  }
+];
+
+const quizEl = document.getElementById('quiz');
+const doneEl = document.getElementById('done');
+const scoreEl = document.getElementById('score');
+document.getElementById('total').textContent = quiz.length;
+let done = 0, score = 0;
+const state = new Array(quiz.length).fill(false);
+
+function markDone(correct){
+  done++; if(correct) score++;
+  doneEl.textContent = done; scoreEl.textContent = score;
+}
+
+quiz.forEach((item, i) => {
+  const card = document.createElement('div');
+  card.className = 'q';
+  let html = `<div class="qhead"><span class="qnum">${i+1}</span><span class="qtype">${item.type} · ${item.unit}</span></div>
+    <div class="qtext">${item.q}</div>`;
+
+  if(item.type === "객관식"){
+    html += `<div class="opts">` + item.opts.map((o,j)=>
+      `<button class="opt" data-i="${i}" data-j="${j}">${String.fromCharCode(9312+j)} ${o}</button>`
+    ).join('') + `</div>`;
+  } else if(item.type === "OX"){
+    html += `<div class="oxrow">
+      <button class="oxbtn" data-i="${i}" data-v="O">O (맞다)</button>
+      <button class="oxbtn" data-i="${i}" data-v="X">X (틀리다)</button>
+    </div>`;
+  } else {
+    html += `<input type="text" id="in${i}" placeholder="정답을 입력하세요" autocomplete="off">
+      <button class="checkbtn" data-i="${i}">채점하기</button>`;
+  }
+
+  html += `<div class="result" id="res${i}"></div>
+    <div class="explain" id="ex${i}"></div>`;
+  card.innerHTML = html;
+  quizEl.appendChild(card);
+});
+
+function showExplain(i, correctText){
+  const ex = document.getElementById('ex'+i);
+  ex.innerHTML = `<div class="ansline">✅ 정답: ${correctText}</div>${quiz[i].ex}`;
+  ex.style.display = 'block';
+}
+
+quizEl.addEventListener('click', (e)=>{
+  const t = e.target;
+
+  if(t.classList.contains('opt')){
+    const i = +t.dataset.i, j = +t.dataset.j;
+    if(state[i]) return;
+    state[i] = true;
+    const item = quiz[i];
+    const btns = t.parentElement.querySelectorAll('.opt');
+    btns.forEach((b,k)=>{
+      b.classList.add('disabled');
+      if(k === item.answer) b.classList.add('correct');
+    });
+    const correct = (j === item.answer);
+    if(!correct) t.classList.add('wrong');
+    const res = document.getElementById('res'+i);
+    res.textContent = correct ? "⭕ 정답이에요!" : "❌ 틀렸어요.";
+    res.className = 'result ' + (correct ? 'ox-ok' : 'ox-no');
+    res.style.display = 'block';
+    showExplain(i, String.fromCharCode(9312+item.answer) + " " + item.opts[item.answer]);
+    markDone(correct);
+  }
+
+  if(t.classList.contains('oxbtn')){
+    const i = +t.dataset.i, v = (t.dataset.v === 'O');
+    if(state[i]) return;
+    state[i] = true;
+    const item = quiz[i];
+    const btns = t.parentElement.querySelectorAll('.oxbtn');
+    btns.forEach(b=>{
+      b.classList.add('disabled');
+      const bv = (b.dataset.v === 'O');
+      if(bv === item.answer) b.classList.add('correct');
+    });
+    const correct = (v === item.answer);
+    if(!correct) t.classList.add('wrong');
+    const res = document.getElementById('res'+i);
+    res.textContent = correct ? "⭕ 정답이에요!" : "❌ 틀렸어요.";
+    res.className = 'result ' + (correct ? 'ox-ok' : 'ox-no');
+    res.style.display = 'block';
+    showExplain(i, item.answer ? "O (맞다)" : "X (틀리다)");
+    markDone(correct);
+  }
+
+  if(t.classList.contains('checkbtn')){
+    const i = +t.dataset.i;
+    if(state[i]) return;
+    const item = quiz[i];
+    const inp = document.getElementById('in'+i);
+    const val = inp.value.trim().toLowerCase().replace(/\s/g,'');
+    if(val === '') { inp.focus(); return; }
+    state[i] = true;
+    inp.disabled = true; t.disabled = true;
+    const correct = item.accept.some(a => a.toLowerCase().replace(/\s/g,'') === val);
+    inp.style.borderColor = correct ? 'var(--ok)' : 'var(--no)';
+    inp.style.background = correct ? 'var(--okbg)' : 'var(--nobg)';
+    const res = document.getElementById('res'+i);
+    res.textContent = correct ? "⭕ 정답이에요!" : "❌ 틀렸어요.";
+    res.className = 'result ' + (correct ? 'ox-ok' : 'ox-no');
+    res.style.display = 'block';
+    showExplain(i, item.display);
+    markDone(correct);
+  }
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  location.reload();
+});
+</script>
+</body>
+</html>
