@@ -12,7 +12,6 @@
     --sub: #5a6273;
     --accent1: #4f7cff;
     --accent2: #21b573;
-    --accent3: #ff8a3d;
     --line: #e4e8f0;
     --hi: #fff3cd;
   }
@@ -23,7 +22,7 @@
     background: var(--bg);
     color: var(--ink);
     line-height: 1.75;
-    font-size: 18px;
+    font-size: 17px;
     padding: 0 0 60px;
   }
   header {
@@ -36,9 +35,9 @@
     z-index: 10;
     box-shadow: 0 2px 12px rgba(0,0,0,.12);
   }
-  header h1 { margin: 0 0 6px; font-size: 21px; }
-  header p { margin: 0; font-size: 14px; opacity: .92; }
-  .wrap { padding: 16px; max-width: 1080px; margin: 0 auto; }
+  header h1 { margin: 0 0 6px; font-size: 20px; }
+  header p { margin: 0; font-size: 13px; opacity: .92; }
+  .wrap { padding: 16px; max-width: 800px; margin: 0 auto; }
   details {
     background: var(--card);
     border-radius: 16px;
@@ -49,14 +48,13 @@
   }
   summary {
     cursor: pointer;
-    padding: 18px 18px;
-    font-size: 18px;
+    padding: 16px 18px;
+    font-size: 17px;
     font-weight: 700;
     list-style: none;
     display: flex;
     align-items: center;
     gap: 10px;
-    user-select: none;
   }
   summary::-webkit-details-marker { display: none; }
   summary::after {
@@ -64,90 +62,64 @@
     margin-left: auto;
     transition: transform .25s;
     color: var(--sub);
-    font-size: 15px;
   }
   details[open] summary::after { transform: rotate(180deg); }
   .badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 30px; height: 30px;
-    border-radius: 9px;
+    width: 28px; height: 28px;
+    border-radius: 8px;
     color: #fff;
-    font-size: 15px;
-    flex-shrink: 0;
+    font-size: 14px;
   }
   .b1 { background: var(--accent1); }
   .b2 { background: var(--accent2); }
-  .b3 { background: var(--accent3); }
   .body { padding: 4px 18px 20px; }
   h3 {
     font-size: 16px;
-    margin: 20px 0 8px;
+    margin: 22px 0 10px;
     padding-left: 10px;
     border-left: 4px solid var(--accent1);
     color: var(--ink);
   }
-  .body h3:first-of-type { margin-top: 6px; }
+  .body h3:first-of-type { margin-top: 8px; }
   .s2 h3 { border-color: var(--accent2); }
-  .s3 h3 { border-color: var(--accent3); }
-  p { margin: 6px 0; }
-  ul { margin: 6px 0; padding-left: 22px; }
-  li { margin: 5px 0; }
-  strong { color: #d6336c; font-weight: 700; }
-  .tip {
-    background: var(--hi);
+  ul { margin: 8px 0; padding-left: 20px; }
+  li { margin: 4px 0; }
+  strong { color: #d6336c; }
+  .box {
     border-radius: 10px;
-    padding: 10px 14px;
+    padding: 12px 14px;
+    margin: 10px 0;
     font-size: 15px;
-    margin: 10px 0;
+    line-height: 1.7;
   }
-  .easy {
-    background: #eef7ff;
-    border-left: 4px solid #4f7cff;
-    border-radius: 8px;
-    padding: 11px 14px;
-    font-size: 15.5px;
-    margin: 10px 0;
-    line-height: 1.75;
-  }
-  .easy .lbl { font-weight: 800; color: #2f6fed; display: block; margin-bottom: 3px; }
-  .ex-box {
-    background: #f0fbf4;
-    border-left: 4px solid #21b573;
-    border-radius: 8px;
-    padding: 11px 14px;
-    font-size: 15.5px;
-    margin: 10px 0;
-    line-height: 1.75;
-  }
-  .ex-box .lbl { font-weight: 800; color: #159a5f; display: block; margin-bottom: 3px; }
-  .arrow-demo {
-    background:#fff; border:1px dashed #b9c6e6; border-radius:10px;
-    padding:12px 14px; margin:10px 0; font-size:15px; line-height:1.9;
-  }
-  .arrow-demo .big { font-size:20px; letter-spacing:1px; }
+  .blue { background: #eef7ff; border-left: 4px solid #4f7cff; }
+  .green { background: #f0fbf4; border-left: 4px solid #21b573; }
+  .yellow { background: #fff8e6; border-left: 4px solid #f59e0b; }
+  .box b { display: block; margin-bottom: 4px; }
+  .box.blue b { color: #2f6fed; }
+  .box.green b { color: #159a5f; }
+  .box.yellow b { color: #b45309; }
   table {
     width: 100%;
     border-collapse: collapse;
     margin: 12px 0;
-    font-size: 14.5px;
+    font-size: 14px;
     background: #fff;
   }
   th, td {
     border: 1px solid var(--line);
-    padding: 9px 8px;
+    padding: 8px 6px;
     text-align: center;
-    vertical-align: middle;
   }
-  th { background: #eef2ff; font-weight: 700; }
-  td:first-child { background: #f8faff; font-weight: 600; }
+  th { background: #f0f4ff; font-weight: 600; }
   .note {
     text-align: center;
     color: var(--sub);
     font-size: 13px;
-    margin: 26px 16px 0;
-    line-height: 1.6;
+    margin: 24px 16px 0;
   }
   .toggle-all {
     display: block;
@@ -166,798 +138,330 @@
 <body>
 <header>
   <h1>🔬 중1 과학 2학기 중간고사</h1>
-  <p>쉬운 설명 + 예시 · 💡파란박스=쉬운설명, 📌초록박스=예시</p>
+  <p>💡파란박스=쉬운설명 · 📌초록박스=예시 · ⚠️노란박스=주의</p>
 </header>
 
 <div class="wrap">
   <button class="toggle-all" id="toggleAll">전체 펼치기 / 접기</button>
 
-  <!-- 1단원 -->
+  <!-- ==================== 1단원: 여러 가지 힘 ==================== -->
   <details>
     <summary><span class="badge b1">1</span>여러 가지 힘</summary>
-    <div class="body s1">
-      <h3>힘이란?</h3>
+    <div class="body">
+
+      <!-- 1-1. 힘의 기본 개념 -->
+      <h3>1. 힘이란?</h3>
       <ul>
-        <li><strong>힘</strong>: 물체의 <strong>모양</strong>이나 <strong>운동 상태</strong>(빠르기·방향)를 변하게 하는 원인이에요.</li>
-        <li>힘의 단위: <strong>N(뉴턴)</strong> — "힘의 크기"를 재는 단위예요. 길이를 cm로 재듯, 힘은 N으로 재요.</li>
+        <li><strong>힘</strong>: 물체의 <strong>모양</strong>이나 <strong>운동 상태</strong>(빠르기·방향)를 변하게 하는 원인</li>
+        <li>힘의 단위: <strong>N(뉴턴)</strong></li>
+        <li>힘의 3요소: <strong>크기, 방향, 작용점</strong> → 화살표로 표현</li>
       </ul>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게</span>
-        "힘을 준다"는 건 물체를 <b>밀거나, 당기거나, 모양을 바꾸는</b> 거예요.
-        축구공을 발로 차면(운동 상태가 바뀜), 찰흙을 손으로 누르면(모양이 바뀜) → 둘 다 "힘을 준 것"이에요.
+      <div class="box blue">
+        <b>💡 화살표로 힘 나타내기</b>
+        • 화살표 <strong>길이</strong> = 힘의 크기 (길수록 센 힘)<br>
+        • 화살표 <strong>방향</strong> = 힘의 방향<br>
+        • 화살표 <strong>시작점</strong> = 작용점 (힘이 작용하는 위치)
       </div>
 
-      <h3>힘의 3요소와 "화살표로 표현"</h3>
+      <!-- 1-2. 여러 가지 힘의 종류 -->
+      <h3>2. 여러 가지 힘의 종류</h3>
+      <table>
+        <tr><th>힘</th><th>정의</th><th>방향</th><th>예시</th></tr>
+        <tr><td><strong>중력</strong></td><td>지구가 물체를 당기는 힘</td><td>연직 아래 ↓</td><td>물체가 떨어짐</td></tr>
+        <tr><td><strong>탄성력</strong></td><td>변형된 물체가 원래로 돌아가려는 힘</td><td>변형 반대 방향</td><td>용수철, 고무줄</td></tr>
+        <tr><td><strong>마찰력</strong></td><td>접촉면에서 움직임을 방해하는 힘</td><td>운동 반대 방향</td><td>브레이크</td></tr>
+        <tr><td><strong>부력</strong></td><td>유체가 물체를 밀어 올리는 힘</td><td>위쪽 ↑</td><td>배가 뜸</td></tr>
+        <tr><td><strong>수직항력</strong></td><td>접촉면이 물체를 떠받치는 힘</td><td>접촉면에 수직</td><td>책상이 책 받침</td></tr>
+      </table>
+
+      <!-- 중력 상세 -->
+      <h3>3. 중력과 무게</h3>
       <ul>
-        <li>힘은 눈에 안 보여서, 그림으로 그릴 때 <strong>화살표</strong>로 나타내요.</li>
-        <li>힘의 3요소: <strong>크기 · 방향 · 작용점</strong></li>
+        <li><strong>중력</strong>: 지구가 물체를 아래로 끌어당기는 힘</li>
+        <li><strong>무게</strong>: 물체에 작용하는 중력의 크기 (단위: N)</li>
+        <li><strong>무게 = 질량 × 9.8</strong> (지구에서)</li>
       </ul>
-      <div class="easy">
-        <span class="lbl">💡 "화살표로 표현"이 무슨 말이야?</span>
-        힘은 눈에 안 보이니까, 과학에서는 <b>화살표 하나</b>로 힘을 그려서 표현해요. 화살표 하나에 3가지 정보가 다 담겨요:
-        <ul style="margin-top:6px">
-          <li><b>크기</b> → 화살표의 <b>길이</b> (힘이 셀수록 화살표를 길게 그림)</li>
-          <li><b>방향</b> → 화살표가 <b>향하는 쪽</b> (미는 방향으로 화살촉이 향함)</li>
-          <li><b>작용점</b> → 화살표가 <b>시작하는 점</b> (힘이 닿는 위치)</li>
-        </ul>
-      </div>
-      <div class="arrow-demo">
-        예를 들어 상자를 오른쪽으로 세게 밀면 이렇게 그려요:<br>
-        <span class="big">📦●———————▶</span><br>
-        · <b>●</b>(작용점): 손이 닿은 상자 지점 &nbsp; · <b>화살표 방향</b>: 오른쪽(미는 방향)<br>
-        · <b>화살표 길이</b>: 길수록 센 힘. 약하게 밀면 <span class="big">📦●——▶</span> 처럼 짧게 그려요.
+      <div class="box green">
+        <b>📌 계산 예시</b>
+        질량 5kg → 무게 = 5 × 9.8 = <strong>49N</strong><br>
+        달에서는 중력이 지구의 1/6 → 무게도 1/6
       </div>
 
-      <h3>🧮 힘의 크기 계산 (화살표 눈금)</h3>
-      <ul>
-        <li>화살표 <strong>1칸(눈금)이 몇 N인지</strong> 정해두고, 화살표 칸 수를 세면 힘의 크기가 나와요.</li>
-        <li><strong>힘의 크기 = 1칸의 크기 × 칸 수</strong></li>
-      </ul>
-      <div class="ex-box">
-        <span class="lbl">📌 예제</span>
-        1칸이 <b>10N</b>인 모눈종이에서 화살표가 <b>3칸</b> 길이라면?<br>
-        → 힘의 크기 = 10N × 3 = <b>30N</b>, 방향은 화살표가 가리키는 쪽.
-      </div>
-
-      <h3>⭐ 합력 (알짜힘) 계산 — 시험 단골!</h3>
-      <div class="easy">
-        <span class="lbl">💡 합력(알짜힘)이 뭐야?</span>
-        한 물체에 여러 힘이 <b>동시에</b> 작용할 때가 있어요. 이때 그 힘들을 <b>전부 합쳐서 하나로</b> 나타낸 게 <b>합력</b>이에요.<br>
-        <b>합력 = 알짜힘</b> (같은 말이에요!)
-      </div>
-
-      <div class="arrow-demo">
-        <span class="lbl" style="color:#2f6fed;">🎯 핵심 개념: 왜 "합쳐서" 생각해야 할까?</span><br>
-        물체에 힘이 여러 개 작용해도, 물체는 <b>결국 한 방향으로만</b> 움직여요.<br>
-        그래서 "이 물체가 실제로 어떻게 움직일까?"를 알려면, 여러 힘을 <b>하나로 합쳐서</b> 봐야 해요.<br><br>
-        <b>예)</b> 상자를 오른쪽으로 10N, 왼쪽으로 3N으로 동시에 민다면?<br>
-        → 상자가 양쪽으로 쪼개지진 않잖아요! 결국 <b>오른쪽으로 7N만큼</b> 밀리는 것처럼 움직여요.<br>
-        → 이 <b>7N 오른쪽</b>이 바로 <b>합력(알짜힘)</b>이에요.
-      </div>
-
-      <div class="easy">
-        <span class="lbl">💡 줄다리기로 완벽 이해!</span>
-        알짜힘은 <b>줄다리기</b>랑 똑같아요!<br><br>
-        <b>상황 1)</b> 🧑‍🤝‍🧑 왼쪽 팀 100N &nbsp;←&nbsp; 줄 &nbsp;→&nbsp; 오른쪽 팀 100N 🧑‍🤝‍🧑<br>
-        → 양쪽이 똑같은 힘! 줄은 <b>안 움직임</b> → 알짜힘 = <b>0N</b><br><br>
-        <b>상황 2)</b> 🧑 왼쪽 팀 60N &nbsp;←&nbsp; 줄 &nbsp;→&nbsp; 오른쪽 팀 100N 🧑‍🤝‍🧑🧑<br>
-        → 오른쪽이 40N 더 세! 줄은 <b>오른쪽으로</b> 끌려감 → 알짜힘 = <b>40N 오른쪽</b><br><br>
-        <span style="color:#d6336c;"><b>이게 핵심이야!</b></span> 줄다리기에서 "실제로 끌려가는 방향과 그 힘의 크기" = 알짜힘
-      </div>
-
-      <div class="tip">
-        🔑 <b>알짜힘 구하는 방법 (초간단 2단계)</b><br><br>
-        <b>1단계:</b> 힘들을 <b>방향별로 나눠!</b><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;→ 오른쪽으로 가는 힘들 vs 왼쪽으로 가는 힘들<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;→ (또는) 위로 가는 힘들 vs 아래로 가는 힘들<br><br>
-        <b>2단계:</b> <b>큰 쪽 − 작은 쪽</b> = 알짜힘!<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;→ 방향은 <b>더 큰 쪽</b> 방향
-      </div>
-
-      <div class="arrow-demo">
-        <span class="lbl" style="color:#159a5f;">📌 실전 예제 1: 같은 방향</span><br>
-        오른쪽으로 <b>4N</b>, 오른쪽으로 <b>2N</b> (둘 다 같은 방향)<br><br>
-        → 같은 방향이니까 그냥 <b>더해!</b><br>
-        → 알짜힘 = 4 + 2 = <b>6N, 오른쪽</b><br><br>
-        <span class="big">📦 ●——▶ + ●—▶ = ●————▶</span><br>
-        <span style="color:var(--sub);">같은 방향으로 미는 건 힘을 합치는 거니까 당연히 더해져요!</span>
-      </div>
-
-      <div class="arrow-demo">
-        <span class="lbl" style="color:#159a5f;">📌 실전 예제 2: 반대 방향</span><br>
-        오른쪽으로 <b>50N</b>, 왼쪽으로 <b>30N</b><br><br>
-        → 반대 방향이니까 <b>빼!</b> (줄다리기처럼 서로 상쇄)<br>
-        → 알짜힘 = 50 − 30 = <b>20N, 오른쪽</b> (큰 쪽 방향)<br><br>
-        <span class="big">◀——● 📦 ●————▶ → 결과: 📦 ●——▶</span><br>
-        <span style="color:var(--sub);">왼쪽 30N과 오른쪽 30N이 서로 상쇄! 오른쪽에서 남은 20N만 효과를 내요.</span>
-      </div>
-
-      <div class="arrow-demo">
-        <span class="lbl" style="color:#159a5f;">📌 실전 예제 3: 힘이 3개 이상</span><br>
-        오른쪽 <b>10N</b>, 오른쪽 <b>5N</b>, 왼쪽 <b>8N</b><br><br>
-        <b>1단계:</b> 방향별로 묶기<br>
-        &nbsp;&nbsp;• 오른쪽 팀: 10 + 5 = <b>15N</b><br>
-        &nbsp;&nbsp;• 왼쪽 팀: <b>8N</b><br><br>
-        <b>2단계:</b> 큰 쪽 − 작은 쪽<br>
-        &nbsp;&nbsp;• 알짜힘 = 15 − 8 = <b>7N, 오른쪽</b><br><br>
-        <span style="color:var(--sub);">힘이 몇 개든 "오른쪽 팀 총합 vs 왼쪽 팀 총합"으로 줄다리기처럼 생각하면 돼!</span>
-      </div>
-
-      <div class="arrow-demo">
-        <span class="lbl" style="color:#159a5f;">📌 실전 예제 4: 알짜힘이 0인 경우</span><br>
-        위로 <b>20N</b>, 아래로 <b>20N</b><br><br>
-        → 크기가 같고 방향이 반대!<br>
-        → 알짜힘 = 20 − 20 = <b>0N</b><br><br>
-        <span style="color:#d6336c;"><b>⚠️ 주의!</b></span> 알짜힘 0 ≠ 힘이 없다<br>
-        힘은 둘 다 작용하고 있어! 다만 서로 <b>상쇄돼서 효과가 0</b>인 거야.<br>
-        이 상태를 <b>"힘의 평형"</b>이라고 해요.
-      </div>
-
-      <div class="easy">
-        <span class="lbl">💡 한눈에 정리</span>
-        <table>
-          <tr><th>상황</th><th>계산</th><th>예시</th></tr>
-          <tr><td><b>같은 방향</b></td><td><b>더하기</b></td><td>→5N + →3N = <b>→8N</b></td></tr>
-          <tr><td><b>반대 방향</b></td><td><b>빼기</b> (큰−작은)</td><td>→5N + ←3N = <b>→2N</b></td></tr>
-          <tr><td><b>크기 같고 반대</b></td><td>빼면 <b>0</b></td><td>→5N + ←5N = <b>0N (평형)</b></td></tr>
-        </table>
-      </div>
-
-      <div class="tip">⚠️ <b>자주 틀리는 포인트!</b><br>
-      "알짜힘이 0이면 힘이 안 작용하는 거야?" → <b>아니야!</b><br>
-      힘은 작용하고 있어. 다만 서로 <b>상쇄돼서 결과적으로 0</b>인 거야.<br>
-      책상 위 책도 중력(아래)과 책상이 받치는 힘(위)이 계속 작용 중인데, 둘이 상쇄돼서 가만히 있는 거야!</div>
-
-      <h3>힘의 평형</h3>
-      <ul>
-        <li><strong>힘의 평형</strong>: 두 힘이 <strong>크기 같고 · 방향 반대 · 같은 작용선</strong>이면 합력이 <strong>0</strong>이 되는 상태.</li>
-        <li>합력 = 0이면 물체는 <strong>정지</strong>해 있거나 <strong>등속(일정한 빠르기)</strong>으로 움직여요.</li>
-      </ul>
-      <div class="ex-box">
-        <span class="lbl">📌 예제</span>
-        책상 위 책에 <b>중력(아래) 20N</b>과 <b>책상이 떠받치는 힘(위) 20N</b>이 작용 → 크기 같고 방향 반대 → 합력 <b>0N</b> → 책은 가만히 있어요(평형).
-      </div>
-      <div class="tip">🔑 헷갈림 주의: <b>"평형이다" = 합력 0 = 안 움직이거나 등속</b>. 두 힘의 크기가 다르면 평형이 아니고, 남은 합력(알짜힘) 방향으로 운동 상태가 변해요.</div>
-
-      <h3>⭐⭐ 알짜힘과 운동 상태 변화 (03단원 핵심!)</h3>
-      <div class="easy">
-        <span class="lbl">💡 알짜힘이 0일 때 vs 0이 아닐 때</span>
-        <b>알짜힘 = 0</b>이면 → 물체는 <b>정지 상태 유지</b> 또는 <b>등속 직선 운동</b> 유지 (운동 상태 안 변함)<br>
-        <b>알짜힘 ≠ 0</b>이면 → 물체의 <b>운동 상태가 변함</b> (속력이나 방향이 바뀜!)
-      </div>
-      <div class="tip">
-        🔑 <b>운동 상태 변화에 영향을 주는 요인</b><br>
-        • <b>알짜힘의 크기</b>: 클수록 운동 상태 변화가 <b>크다</b><br>
-        • <b>물체의 질량</b>: 작을수록 운동 상태 변화가 <b>크다</b>
-      </div>
-
-      <h3>⭐ 힘의 방향에 따른 운동 변화 (완전 정리!)</h3>
-      <div class="arrow-demo">
-        <b>🎯 힘의 방향과 운동 방향의 관계</b><br><br>
-        <table>
-          <tr><th>힘의 방향</th><th>운동 방향과의 관계</th><th>변하는 것</th><th>예시</th></tr>
-          <tr><td rowspan="2"><b>나란할 때</b></td><td>같은 방향</td><td><b>속력 증가</b> (운동 방향 일정)</td><td>자이로드롭, 스카이다이빙, 경사면 내려오는 수레</td></tr>
-          <tr><td>반대 방향</td><td><b>속력 감소</b> (운동 방향 일정)</td><td>위로 던진 공, 브레이크 밟은 차, 경사면 올라가는 공</td></tr>
-          <tr><td><b>수직일 때</b></td><td>운동 방향과 수직</td><td><b>운동 방향만 변함</b> (속력 일정)</td><td>등속 원운동: 인공위성, 대관람차, 회전목마</td></tr>
-          <tr><td><b>비스듬할 때</b></td><td>운동 방향과 비스듬</td><td><b>속력과 운동 방향 모두 변함</b></td><td>포물선 운동: 비스듬히 던진 공, 화살, 바이킹, 그네</td></tr>
-        </table>
-      </div>
-
-      <h3>1️⃣ 속력만 변하는 운동 (힘과 운동 방향이 나란할 때)</h3>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게</span>
-        힘이 <b>운동 방향과 나란하게</b> 작용하면 물체는 <b>직선으로만</b> 움직여요. 방향은 안 바뀌고 <b>속력만</b> 바뀌어요!
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 속력이 점점 증가하는 운동 (힘 = 운동 방향과 같은 방향)</span>
-        • 자이로드롭에서 떨어지는 순간<br>
-        • 스카이다이빙 (낙하산 펴기 전)<br>
-        • 경사면을 내려오는 수레, 나무에서 떨어지는 사과<br>
-        → <b>힘과 운동 방향이 같으면</b> → 점점 <b>빨라짐!</b>
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 속력이 점점 감소하는 운동 (힘 = 운동 방향과 반대 방향)</span>
-        • 연직 위로 던져 올린 공 (올라갈 때)<br>
-        • 운동장을 구르는 공 (마찰력 때문에 느려짐)<br>
-        • 브레이크를 밟은 자동차<br>
-        → <b>힘과 운동 방향이 반대면</b> → 점점 <b>느려짐!</b>
-      </div>
-
-      <h3>2️⃣ 운동 방향만 변하는 운동 (등속 원운동)</h3>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게</span>
-        힘이 <b>운동 방향과 수직(90°)</b>으로 작용하면, 속력은 그대로인데 <b>방향만 계속 바뀌어요</b>. 이게 바로 <b>등속 원운동</b>!
-      </div>
-      <div class="arrow-demo">
-        <b>등속 원운동의 특징</b><br><br>
-        • <b>속력</b>: 항상 <b>일정</b><br>
-        • <b>운동 방향</b>: 원의 <b>접선 방향</b>으로 매 순간 변함<br>
-        • <b>힘의 방향</b>: 항상 원의 <b>중심 방향</b>으로 작용 (구심력)<br>
-        • <b>힘과 운동</b>: 서로 <b>수직</b>
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 등속 원운동의 예</span>
-        • <b>인공위성</b>: 지구 주위를 일정한 속력으로 돌아요<br>
-        • <b>대관람차</b>: 같은 속력으로 빙글빙글<br>
-        • <b>회전목마</b>: 원을 그리며 일정한 속력으로 회전<br>
-        • <b>선풍기 날개</b>: 회전하는 날개 끝
-      </div>
-      <div class="tip">
-        🔑 <b>줄을 놓으면?</b> 등속 원운동하던 물체의 줄을 놓으면, 더 이상 중심 방향 힘이 없으니까 <b>그 순간의 운동 방향(접선 방향)으로 날아가요!</b>
-      </div>
-
-      <h3>3️⃣ 속력과 운동 방향이 모두 변하는 운동 (포물선 운동)</h3>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게</span>
-        힘이 <b>운동 방향과 비스듬하게</b> 작용하면 <b>속력도 방향도 둘 다</b> 변해요. 물체는 곡선(포물선)을 그리며 움직여요!
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 포물선 운동의 예</span>
-        <b>비스듬히 던져 올린 물체</b><br>
-        • 비스듬히 차 올린 축구공<br>
-        • 활시위를 떠난 화살의 운동<br>
-        • 농구공을 던져 골대에 넣는 슛<br><br>
-        <b>실에 매달려 왕복하는 운동</b><br>
-        • <b>바이킹</b> (놀이기구)<br>
-        • <b>그네</b> 타기<br>
-        • <b>시계추</b>의 운동
-      </div>
-      <div class="arrow-demo">
-        <b>포물선 운동의 특징</b><br><br>
-        • <b>속력</b>: 계속 변함 (올라갈 때 느려지고, 내려올 때 빨라짐)<br>
-        • <b>운동 방향</b>: 계속 변함 (곡선 경로)<br>
-        • <b>힘의 방향</b>: 중력 - 항상 <b>연직 아래</b><br>
-        • 운동 경로의 <b>접선 방향</b>으로 매 순간 변함
-      </div>
-
-      <h3>⭐ 알짜힘에 따른 물체의 운동 정리표</h3>
-      <div class="arrow-demo">
-        <table>
-          <tr><th>알짜힘</th><th>힘-운동 방향 관계</th><th>속력</th><th>운동 방향</th><th>예시</th></tr>
-          <tr><td><b>0</b></td><td>-</td><td>일정</td><td>일정</td><td>에스컬레이터, 모노레일, 무빙워크</td></tr>
-          <tr><td rowspan="4"><b>0이 아님</b></td><td>나란 (같은 방향)</td><td><b>증가</b></td><td>일정</td><td>자이로드롭, 스카이다이빙</td></tr>
-          <tr><td>나란 (반대 방향)</td><td><b>감소</b></td><td>일정</td><td>던져 올린 공, 브레이크 밟은 차</td></tr>
-          <tr><td>수직</td><td>일정</td><td><b>변함</b></td><td>인공위성, 대관람차, 회전목마</td></tr>
-          <tr><td>비스듬</td><td><b>변함</b></td><td><b>변함</b></td><td>바이킹, 그네, 비스듬히 던진 공</td></tr>
-        </table>
-      </div>
-
-      <h3>🏠 일상생활에서의 힘의 작용</h3>
-      <div class="easy">
-        <span class="lbl">💡 핵심 개념</span>
-        바닥에 놓인 물체나 매달린 물체가 <b>정지해 있다</b>면 → 작용하는 힘들이 <b>평형</b>을 이루고 있어요 → <b>알짜힘 = 0</b>!
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 평형을 이루는 힘의 예</span>
-        <table>
-          <tr><th>상황</th><th>작용하는 힘</th><th>평형 관계</th></tr>
-          <tr><td>바닥에 놓인 물체</td><td>중력(↓), 수직항력(↑)</td><td>중력 = 수직항력</td></tr>
-          <tr><td>용수철에 매달린 추</td><td>중력(↓), 탄성력(↑)</td><td>중력 = 탄성력</td></tr>
-          <tr><td>물 위에 떠 있는 튜브</td><td>중력(↓), 부력(↑)</td><td>중력 = 부력</td></tr>
-          <tr><td>문을 멈추는 장치</td><td>닫히려는 힘, 마찰력</td><td>두 힘이 평형</td></tr>
-        </table>
-      </div>
-      <div class="tip">
-        🔑 <b>책상 위에 놓인 책</b><br>
-        • 중력(아래) + 수직항력(위) → 두 힘이 <b>평형</b><br>
-        • 수직항력의 크기 = 중력의 크기<br>
-        • 책상이 책을 떠받치는 힘의 방향 = 중력의 반대(위쪽)
-      </div>
-
-      <h3>중력</h3>
-      <ul>
-        <li><strong>중력</strong>: 지구가 물체를 <strong>지구 중심 방향(아래)</strong>으로 끌어당기는 힘이에요.</li>
-        <li>방향: 항상 <strong>아래쪽(연직 아래)</strong> — 그래서 물건을 놓으면 떨어지죠.</li>
-        <li>크기: 물체의 <strong>질량이 클수록</strong> 커요. (무게 = 질량 × 9.8)</li>
-      </ul>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게</span>
-        손에 든 연필을 놓으면 <b>바닥으로 떨어지죠?</b> 지구가 연필을 아래로 잡아당기기 때문인데, 이 힘이 바로 <b>중력</b>이에요.
-        무거운 물건일수록 지구가 더 세게 잡아당겨요.
-      </div>
-      <div class="ex-box">
-        <span class="lbl">🧮 무게 계산 공식</span>
-        <b>무게(N) = 질량(kg) × 9.8</b> &nbsp;(지구에서 질량 1kg당 약 9.8N)<br>
-        • 질량 2kg → 무게 = 2 × 9.8 = <b>19.6N</b><br>
-        • 질량 5kg → 무게 = 5 × 9.8 = <b>49N</b><br>
-        • 질량 10kg → 무게 = 10 × 9.8 = <b>98N</b><br>
-        <b>달에서는?</b> 달의 중력은 지구의 <b>1/6</b> → 달 무게 = 지구 무게 ÷ 6.<br>
-        예: 지구에서 60kg인 사람 → 지구 무게 588N, 달 무게 ≈ 588 ÷ 6 ≈ <b>98N</b> (질량은 그대로 60kg!)
-      </div>
-
-      <h3>⭐ 질량 vs 무게 (시험 최다 출제!)</h3>
-      <div class="easy">
-        <span class="lbl">💡 한 문장으로 구별</span>
-        <b>질량</b> = 물체에 들어 있는 "물질의 진짜 양"(어디서나 안 변함) /
-        <b>무게</b> = 그 물체를 지구가 잡아당기는 "중력의 세기"(장소 따라 변함).
-      </div>
+      <!-- 질량 vs 무게 -->
+      <h3>4. 질량 vs 무게 ⭐시험 단골</h3>
       <table>
         <tr><th>구분</th><th>질량</th><th>무게</th></tr>
-        <tr><td>뜻</td><td>물질의 고유한 양</td><td>물체에 작용하는 중력의 크기</td></tr>
-        <tr><td>단위</td><td>kg, g</td><td>N(뉴턴)</td></tr>
-        <tr><td>측정도구</td><td>양팔·윗접시저울</td><td>용수철저울</td></tr>
-        <tr><td>장소 따라</td><td>안 변함</td><td>변함(달=지구의 1/6)</td></tr>
+        <tr><td>뜻</td><td>물질의 고유한 양</td><td>중력의 크기</td></tr>
+        <tr><td>단위</td><td>kg, g</td><td>N</td></tr>
+        <tr><td>측정도구</td><td>양팔저울, 윗접시저울</td><td>용수철저울</td></tr>
+        <tr><td>장소 따라</td><td><strong>안 변함</strong></td><td><strong>변함</strong> (달=1/6)</td></tr>
       </table>
-      <div class="ex-box">
-        <span class="lbl">📌 예시로 이해하기 (달에 갔다고 상상!)</span>
-        어떤 학생의 몸에 든 물질의 양(<b>질량</b>)이 <b>60kg</b>이라고 해요.<br>
-        • <b>지구에서</b>: 질량 60kg 그대로, 무게 = 60 × 9.8 = <b>588N</b><br>
-        • <b>달에서</b>: 질량은 <b>여전히 60kg</b>(몸속 물질은 안 변하니까!), 하지만 달의 중력이 지구의 1/6이라 무게는 <b>약 98N</b>으로 줄어요.<br>
-        → 즉 <b>질량은 그대로인데 무게만 줄어든 것</b>! 달에서 몸이 붕붕 뜨는 이유가 바로 이것이에요.
+      <div class="box blue">
+        <b>💡 쉽게 구별하기</b>
+        질량 = 내 몸에 있는 살과 뼈의 양 (어디서나 똑같음)<br>
+        무게 = 지구가 나를 당기는 힘 (달에선 가벼워짐)
       </div>
-      <div class="tip">🔑 헷갈릴 때: "<b>양팔저울로 재면 질량, 용수철저울로 재면 무게</b>"라고 외우면 쉬워요. 양팔저울은 양쪽을 비교하니 장소가 바뀌어도 똑같지만, 용수철저울은 늘어난 정도로 재니 중력이 약하면 값이 줄어요.</div>
 
-      <h3>탄성력</h3>
+      <!-- 탄성력 -->
+      <h3>5. 탄성력과 훅의 법칙</h3>
       <ul>
-        <li><strong>탄성력</strong>: 눌리거나 늘어난 물체가 <strong>원래 모양으로 돌아가려는 힘</strong>이에요. (용수철, 고무줄, 트램펄린)</li>
-        <li>방향: 내가 힘을 준 방향과 <strong>반대</strong> (내가 누르면 위로 밀어냄)</li>
-        <li>크기: 내가 변형시킨 힘의 크기와 <strong>같아요</strong>.</li>
-        <li><strong>훅의 법칙</strong>: 용수철이 늘어난 길이는 매단 무게에 <strong>정비례</strong> (2배 무거우면 2배 늘어남)</li>
+        <li><strong>탄성력</strong>: 변형된 물체가 원래 모양으로 돌아가려는 힘</li>
+        <li>방향: 힘을 준 방향과 <strong>반대</strong></li>
+        <li><strong>훅의 법칙</strong>: 늘어난 길이 ∝ 매단 무게 (정비례)</li>
       </ul>
-      <div class="ex-box">
-        <span class="lbl">🧮 훅의 법칙 계산법 (비례식)</span>
-        늘어난 길이는 매단 무게(또는 추의 질량)에 <b>정비례</b>해요. 그래서 비례식으로 풀어요:<br>
-        <b>(무게₁ : 늘어난 길이₁) = (무게₂ : 늘어난 길이₂)</b><br><br>
-        <b>예제:</b> 100g 추 → 2cm 늘어남. 그럼 300g은?<br>
-        → 100 : 2 = 300 : ☐ → ☐ = 2 × (300÷100) = 2 × 3 = <b>6cm</b><br>
-        같은 방법: 150g이면 2 × 1.5 = <b>3cm</b>, 250g이면 2 × 2.5 = <b>5cm</b>.
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 생활 예시</span>
-        트램펄린을 밟으면(누르면) 나를 위로 튕겨 올리는 것도 탄성력이에요. 용수철저울이 무게를 재는 원리도 바로 훅의 법칙이에요.
-      </div>
-
-      <h3>⭐ 용수철 연결 문제 (심화)</h3>
-      <div class="easy">
-        <span class="lbl">💡 용수철 상수 (탄성 계수)</span>
-        용수철마다 "얼마나 잘 늘어나는지"가 달라요. 같은 무게를 매달아도 어떤 용수철은 많이 늘어나고, 어떤 건 조금 늘어나요.
-        <b>잘 안 늘어나는 용수철 = 탄성 계수가 큰 용수철 = 뻣뻣한 용수철</b>
+      <div class="box green">
+        <b>📌 훅의 법칙 계산</b>
+        100g → 2cm 늘어남. 300g이면?<br>
+        → 무게가 3배니까 길이도 3배 = <strong>6cm</strong>
       </div>
       <table>
-        <tr><th>연결 방법</th><th>특징</th><th>전체 늘어난 길이</th></tr>
-        <tr><td><b>직렬 연결</b><br>(한 줄로 연결)</td><td>각 용수철에 같은 힘이 작용<br>더 잘 늘어남</td><td>각 용수철 늘어난 길이의 <b>합</b></td></tr>
-        <tr><td><b>병렬 연결</b><br>(나란히 연결)</td><td>힘이 나눠서 작용<br>덜 늘어남</td><td>한 개일 때의 <b>절반</b> (같은 용수철 2개면)</td></tr>
+        <tr><th>연결 방법</th><th>늘어난 길이</th></tr>
+        <tr><td>직렬 (한 줄)</td><td>각각의 <strong>합</strong> (더 잘 늘어남)</td></tr>
+        <tr><td>병렬 (나란히)</td><td>한 개의 <strong>절반</strong> (덜 늘어남)</td></tr>
       </table>
-      <div class="ex-box">
-        <span class="lbl">📌 예제</span>
-        용수철 한 개에 100g → 4cm 늘어날 때<br>
-        • <b>직렬</b> 2개 연결 + 100g → 4 + 4 = <b>8cm</b><br>
-        • <b>병렬</b> 2개 연결 + 100g → 4 ÷ 2 = <b>2cm</b>
-      </div>
 
-      <h3>마찰력</h3>
+      <!-- 마찰력 -->
+      <h3>6. 마찰력</h3>
       <ul>
-        <li><strong>마찰력</strong>: 두 물체가 닿은 면에서 <strong>움직임을 방해하는 힘</strong>이에요.</li>
-        <li>방향: 물체가 가려는 방향과 <strong>반대</strong></li>
-        <li>세지는 조건: ① 물체가 <strong>무거울수록</strong> ↑ ② 바닥이 <strong>거칠수록</strong> ↑</li>
-        <li>❗ 접촉면의 <strong>넓이는 상관없어요</strong> (시험 함정!)</li>
+        <li><strong>마찰력</strong>: 접촉면에서 움직임을 방해하는 힘</li>
+        <li>커지는 조건: 물체가 <strong>무거울수록</strong>, 바닥이 <strong>거칠수록</strong></li>
+        <li>❗ 접촉면 <strong>넓이는 상관없음</strong> (시험 함정!)</li>
       </ul>
-      <div class="ex-box">
-        <span class="lbl">📌 예시</span>
-        얼음판(매끈함) 위에서는 잘 미끄러지지만, 고무매트(거칢) 위에서는 잘 안 미끄러지죠? 거친 바닥일수록 마찰력이 커서 움직임을 더 방해하기 때문이에요.
-        무거운 짐일수록 밀기 힘든 것도 마찰력이 크기 때문이고요.
-      </div>
-
-      <h3>⭐ 정지 마찰력 vs 운동 마찰력 (심화)</h3>
       <table>
-        <tr><th>구분</th><th>정지 마찰력</th><th>운동 마찰력</th></tr>
-        <tr><td>정의</td><td>정지한 물체가 움직이지 <b>않으려고</b> 버티는 힘</td><td>이미 움직이는 물체에 작용하는 마찰력</td></tr>
-        <tr><td>크기</td><td>가한 힘에 따라 <b>변함</b> (0 ~ 최대 정지 마찰력)</td><td><b>일정</b></td></tr>
-        <tr><td>크기 비교</td><td colspan="2"><b>최대 정지 마찰력 > 운동 마찰력</b></td></tr>
+        <tr><th>마찰력 크게 (이용)</th><th>마찰력 작게 (감소)</th></tr>
+        <tr><td>타이어 홈, 눈길에 모래</td><td>윤활유, 베어링, 왁스</td></tr>
       </table>
-      <div class="easy">
-        <span class="lbl">💡 왜 처음 밀 때가 더 힘들까?</span>
-        무거운 상자를 밀 때 처음에 꿈쩍도 안 하다가, 한번 움직이기 시작하면 좀 더 쉽게 밀리죠?<br>
-        → <b>최대 정지 마찰력</b>(처음 버티는 힘)이 <b>운동 마찰력</b>(움직일 때 힘)보다 크기 때문이에요!
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 정지 마찰력의 특징</span>
-        • 10N으로 밀어도 안 움직임 → 정지 마찰력 = 10N<br>
-        • 20N으로 밀어도 안 움직임 → 정지 마찰력 = 20N<br>
-        • 30N으로 밀면 움직이기 시작 → <b>최대 정지 마찰력 = 30N</b><br>
-        → 정지 마찰력은 가한 힘만큼 커지다가, 최대값을 넘으면 움직여요!
+      <div class="box yellow">
+        <b>⚠️ 정지 마찰력 vs 운동 마찰력</b>
+        최대 정지 마찰력 > 운동 마찰력<br>
+        → 처음 밀 때가 가장 힘들고, 움직이기 시작하면 더 쉬움!
       </div>
 
-      <h3>⭐ 마찰력의 이용과 감소 (심화)</h3>
-      <table>
-        <tr><th>마찰력을 크게 (이용)</th><th>마찰력을 작게 (감소)</th></tr>
-        <tr><td>• 타이어 표면을 울퉁불퉁하게<br>• 눈길에 모래/염화칼슘 뿌리기<br>• 운동화 바닥의 무늬<br>• 바이올린 활에 송진 바르기</td><td>• 기름(윤활유) 바르기<br>• 베어링(볼/롤러) 사용<br>• 에어하키 테이블 (공기층)<br>• 스키에 왁스 바르기</td></tr>
-      </table>
-
-      <h3>부력</h3>
+      <!-- 부력 -->
+      <h3>7. 부력</h3>
       <ul>
-        <li><strong>부력</strong>: 물(액체)이나 공기(기체)가 물체를 <strong>위로 밀어 올리는 힘</strong>이에요.</li>
-        <li>방향: <strong>위쪽</strong> (중력과 반대)</li>
-        <li>물에 <strong>잠긴 부피가 클수록</strong> 부력이 커요.</li>
-        <li>부력 &gt; 중력 → <strong>뜬다</strong> / 부력 &lt; 중력 → <strong>가라앉는다</strong></li>
+        <li><strong>부력</strong>: 물(유체)이 물체를 위로 밀어올리는 힘</li>
+        <li>부력 > 중력 → 뜬다 / 부력 < 중력 → 가라앉는다</li>
+        <li>부력은 <strong>잠긴 부피</strong>에 비례 (깊이는 상관없음!)</li>
       </ul>
-      <div class="ex-box">
-        <span class="lbl">📌 예시</span>
-        수영장에 들어가면 몸이 <b>가벼워진 느낌</b>이 나죠? 물이 몸을 위로 밀어 올리는 부력 때문이에요.
-        튜브나 배가 물에 뜨는 것, 열기구가 하늘로 뜨는 것도 모두 부력 덕분이에요.
+      <div class="box yellow">
+        <b>⚠️ 시험 함정</b>
+        "더 깊이 들어가면 부력이 커지나요?" → <strong>아니요!</strong><br>
+        완전히 잠기면 깊이가 달라도 부력은 같아요.
       </div>
 
-      <h3>⭐ 부력의 크기 결정 요인 (심화)</h3>
-      <div class="easy">
-        <span class="lbl">💡 부력 공식</span>
-        <b>부력 = (유체의 밀도) × (잠긴 부피) × (중력가속도)</b><br>
-        쉽게 말해: <b>"밀어낸 물의 무게 = 부력"</b> (아르키메데스의 원리)
+      <!-- 합력(알짜힘) -->
+      <h3>8. 합력(알짜힘) 계산 ⭐시험 필수</h3>
+      <div class="box blue">
+        <b>💡 알짜힘이란?</b>
+        물체에 작용하는 모든 힘을 합친 것 = <strong>합력 = 알짜힘</strong><br>
+        줄다리기처럼 생각! 양쪽 힘을 비교해서 "결국 어디로 얼마나"
       </div>
       <table>
-        <tr><th>부력에 영향 주는 것</th><th>부력에 영향 안 주는 것</th></tr>
-        <tr><td>• <b>잠긴 부피</b> (클수록 ↑)<br>• <b>유체(물 등)의 밀도</b> (클수록 ↑)</td><td>• 물체의 무게 ✕<br>• 물체의 밀도 ✕<br>• 물의 깊이 ✕ (깊이와 상관없음!)</td></tr>
+        <tr><th>상황</th><th>계산</th><th>예시</th></tr>
+        <tr><td>같은 방향</td><td><strong>더하기</strong></td><td>→5N + →3N = <strong>→8N</strong></td></tr>
+        <tr><td>반대 방향</td><td><strong>빼기</strong> (큰쪽-작은쪽)</td><td>→5N + ←3N = <strong>→2N</strong></td></tr>
+        <tr><td>크기 같고 반대</td><td>= <strong>0</strong> (평형)</td><td>→5N + ←5N = <strong>0N</strong></td></tr>
       </table>
-      <div class="tip">⚠️ <b>시험 함정</b>: "물속에서 더 깊이 들어가면 부력이 커지나요?" → <b>아니요!</b> 부력은 깊이와 관계없고, <b>잠긴 부피</b>만 관계있어요. 완전히 잠기면 깊이가 달라도 부력은 같아요.</div>
-      <div class="ex-box">
-        <span class="lbl">📌 물에서 뜨고 가라앉는 조건</span>
-        • <b>물체 밀도 < 물 밀도</b> → 뜬다 (나무, 기름, 얼음)<br>
-        • <b>물체 밀도 > 물 밀도</b> → 가라앉는다 (쇠, 돌)<br>
-        • <b>물체 밀도 = 물 밀도</b> → 물속에서 떠다님
+
+      <!-- 힘의 평형 -->
+      <h3>9. 힘의 평형</h3>
+      <ul>
+        <li><strong>힘의 평형</strong>: 알짜힘 = 0인 상태</li>
+        <li>조건: 두 힘의 <strong>크기 같고, 방향 반대, 같은 작용선</strong></li>
+        <li>평형이면 → <strong>정지</strong> 또는 <strong>등속 직선 운동</strong> 유지</li>
+      </ul>
+      <div class="box green">
+        <b>📌 평형의 예</b>
+        책상 위 책: 중력(↓) = 수직항력(↑) → 알짜힘 0 → 정지<br>
+        물에 뜬 튜브: 중력(↓) = 부력(↑) → 알짜힘 0 → 떠 있음
+      </div>
+      <div class="box yellow">
+        <b>⚠️ 주의!</b>
+        알짜힘 0 ≠ 힘이 없다!<br>
+        힘은 작용하고 있지만, 서로 <strong>상쇄되어 효과가 0</strong>인 것
       </div>
 
-      <h3>⭐ 여러 종류의 힘 정리 (심화)</h3>
+      <!-- 알짜힘과 운동 상태 변화 -->
+      <h3>10. 알짜힘과 운동 상태 변화 ⭐⭐핵심</h3>
+      <div class="box blue">
+        <b>💡 핵심 규칙</b>
+        • 알짜힘 = 0 → 운동 상태 <strong>유지</strong> (정지 또는 등속)<br>
+        • 알짜힘 ≠ 0 → 운동 상태 <strong>변함</strong> (속력이나 방향 바뀜)
+      </div>
       <table>
-        <tr><th>힘의 종류</th><th>정의</th><th>방향</th><th>예시</th></tr>
-        <tr><td><b>중력</b></td><td>지구가 물체를 당기는 힘</td><td>연직 아래 (지구 중심)</td><td>물체가 떨어짐</td></tr>
-        <tr><td><b>수직항력<br>(떠받치는 힘)</b></td><td>접촉면이 물체를 떠받치는 힘</td><td>접촉면에 수직 (보통 위)</td><td>책상이 책을 받침</td></tr>
-        <tr><td><b>탄성력</b></td><td>변형된 물체가 원래대로 돌아가려는 힘</td><td>변형 반대 방향</td><td>용수철, 고무줄</td></tr>
-        <tr><td><b>마찰력</b></td><td>접촉면에서 움직임을 방해하는 힘</td><td>운동(또는 운동하려는) 반대</td><td>브레이크, 걷기</td></tr>
-        <tr><td><b>부력</b></td><td>유체가 물체를 밀어 올리는 힘</td><td>위쪽</td><td>배가 뜸, 열기구</td></tr>
-        <tr><td><b>장력</b></td><td>줄·실이 당겨지며 물체를 당기는 힘</td><td>줄을 따라 당기는 방향</td><td>매달린 추, 줄다리기</td></tr>
+        <tr><th>힘과 운동방향</th><th>힘의 방향</th><th>변하는 것</th><th>예시</th></tr>
+        <tr><td><strong>나란 (같은 방향)</strong></td><td>운동 방향과 같음</td><td>속력 <strong>증가</strong></td><td>자이로드롭, 스카이다이빙</td></tr>
+        <tr><td><strong>나란 (반대 방향)</strong></td><td>운동 방향과 반대</td><td>속력 <strong>감소</strong></td><td>위로 던진 공, 브레이크</td></tr>
+        <tr><td><strong>수직 (90°)</strong></td><td>원의 중심 방향</td><td>방향만 변함 (속력 일정)</td><td>인공위성, 대관람차, 회전목마</td></tr>
+        <tr><td><strong>비스듬</strong></td><td>운동 방향과 비스듬</td><td>속력 + 방향 모두 변함</td><td>바이킹, 그네, 던진 공</td></tr>
       </table>
-      <div class="tip">🔑 <b>수직항력</b>: 바닥이 물체를 "위로 떠받치는 힘"이에요. 책상 위 책이 아래로 안 빠지는 건 책상이 위로 미는 수직항력 덕분!</div>
 
-      <h3>⭐ 알짜힘과 힘과 운동 (계산 정리)</h3>
-      <div class="easy">
-        <span class="lbl">💡 알짜힘 한 줄 정리</span>
-        <b>알짜힘 = 합력</b> = 물체에 작용하는 모든 힘을 합친 것. 알짜힘이 <b>0이면</b> 운동 상태가 안 변하고(정지·등속), <b>0이 아니면</b> 그 방향으로 빨라지거나 느려지거나 방향이 바뀌어요.
+      <div class="box green">
+        <b>📌 등속 원운동 (방향만 변함)</b>
+        • 속력: 일정 / 방향: 매 순간 변함<br>
+        • 힘의 방향: 원의 <strong>중심 방향</strong>으로 계속 작용<br>
+        • 예: 인공위성, 대관람차, 회전목마, 선풍기 날개
       </div>
-      <table>
-        <tr><th>상황</th><th>알짜힘</th><th>물체의 운동</th></tr>
-        <tr><td>힘 평형 (크기 같고 반대)</td><td>0</td><td>정지 또는 등속</td></tr>
-        <tr><td>한 방향 힘이 더 큼</td><td>0 아님</td><td>그 방향으로 빨라짐</td></tr>
-        <tr><td>운동 반대로 힘</td><td>0 아님</td><td>느려짐</td></tr>
-      </table>
-      <div class="ex-box">
-        <span class="lbl">📌 계산 예제</span>
-        썰매를 오른쪽으로 미는 힘 <b>50N</b>, 마찰력(왼쪽) <b>20N</b>.<br>
-        → 알짜힘 = 50 − 20 = <b>30N</b>, 방향 오른쪽 → 썰매는 오른쪽으로 점점 빨라져요.<br>
-        만약 미는 힘이 20N으로 줄어 마찰력과 같아지면 알짜힘 = 0 → <b>등속</b>으로 움직여요.
+
+      <div class="box green">
+        <b>📌 포물선 운동 (속력+방향 모두 변함)</b>
+        힘(중력)이 운동 방향과 <strong>비스듬하게</strong> 작용 → 곡선 경로<br><br>
+        <strong>① 비스듬히 던져 올린 물체</strong><br>
+        • 비스듬히 던진 공, 야구공, 축구공<br>
+        • 활시위를 떠난 화살<br>
+        • 힘의 방향: 항상 <strong>연직 아래</strong> (중력)<br><br>
+        <strong>② 실에 매달려 왕복하는 물체</strong><br>
+        • 바이킹, 그네, 시계추<br>
+        • 힘의 방향: 항상 <strong>연직 아래</strong> (중력)
       </div>
+
+      <div class="box yellow">
+        <b>⚠️ 자주 틀리는 것</b>
+        "인공위성은 속력이 일정하니까 알짜힘=0?" → <strong>틀림!</strong><br>
+        방향이 계속 변하니까 알짜힘 ≠ 0 (원의 중심으로 힘 작용 중)
+      </div>
+
     </div>
   </details>
 
-  <!-- 2단원 -->
+  <!-- ==================== 2단원: 물질의 상태 변화 ==================== -->
   <details>
     <summary><span class="badge b2">2</span>물질의 상태 변화</summary>
     <div class="body s2">
-      <div class="easy">
-        <span class="lbl">💡 이 단원 전체를 꿰뚫는 한마디</span>
-        모든 물질은 <b>눈에 안 보이는 아주 작은 알갱이(입자)</b>로 되어 있어요. 이 입자들은 <b>가만히 있지 않고 스스로 움직여요.</b> 이거 하나만 기억하면 상태 변화가 전부 쉬워져요!
-      </div>
 
-      <h3>확산과 증발 (입자가 움직인다는 증거)</h3>
-      <ul>
-        <li><strong>확산</strong>: 입자가 <strong>스스로 사방으로 퍼져 나가는</strong> 현상이에요.</li>
-        <li><strong>증발</strong>: <strong>액체 표면</strong>에서 액체가 <strong>기체로 변해 날아가는</strong> 현상이에요.</li>
-        <li>둘 다 <strong>온도가 높을수록 빠르게</strong> 일어나요 (입자가 더 활발히 움직이니까).</li>
-      </ul>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게</span>
-        <b>확산</b> → 교실 앞에서 방귀(?)나 향수를 뿌리면 조금 뒤 교실 뒤에서도 냄새가 나죠? 냄새 입자가 <b>스스로 걸어서 퍼진 것</b>이에요. 아무도 안 불었는데 저절로 퍼져요.<br>
-        <b>증발</b> → 젖은 머리카락이나 빨래가 저절로 마르죠? 물 입자가 <b>공기 중으로 한 알 한 알 날아간 것</b>이에요.
-      </div>
-      <div class="tip">🔑 확산 vs 증발 구별: <b>확산은 "퍼짐"</b>(냄새·잉크), <b>증발은 "액체 → 기체로 날아감"</b>(빨래 마름). 증발은 상태가 바뀌지만, 확산은 그냥 퍼지는 거예요.</div>
-
-      <h3>물질의 세 가지 상태</h3>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게 (물로 예를 들면)</span>
-        같은 물이라도 <b>얼음(고체) → 물(액체) → 수증기(기체)</b>로 모습이 달라져요.
-        차이는 입자들이 얼마나 <b>붙어 있느냐</b>예요: 고체는 꽉 붙어 줄 맞춰 있고, 액체는 조금 느슨하고, 기체는 아주 멀리 떨어져 자유롭게 날아다녀요.
-      </div>
+      <!-- 2-1. 물질의 세 가지 상태 -->
+      <h3>1. 물질의 세 가지 상태</h3>
       <table>
-        <tr><th>상태</th><th>모양</th><th>부피</th><th>입자 배열</th></tr>
-        <tr><td>고체</td><td>일정</td><td>일정</td><td>규칙적·촘촘</td></tr>
-        <tr><td>액체</td><td>변함</td><td>일정</td><td>약간 자유롭게</td></tr>
-        <tr><td>기체</td><td>변함</td><td>변함</td><td>매우 자유롭게·멀리</td></tr>
+        <tr><th>상태</th><th>모양</th><th>부피</th><th>입자 배열</th><th>입자 사이 거리</th></tr>
+        <tr><td><strong>고체</strong></td><td>일정</td><td>일정</td><td>규칙적, 촘촘</td><td>매우 가까움</td></tr>
+        <tr><td><strong>액체</strong></td><td>변함</td><td>일정</td><td>불규칙적</td><td>조금 멂</td></tr>
+        <tr><td><strong>기체</strong></td><td>변함</td><td>변함</td><td>매우 불규칙</td><td>매우 멂</td></tr>
       </table>
-      <div class="ex-box">
-        <span class="lbl">📌 예시</span>
-        • <b>고체</b>(얼음): 손에 쥐면 모양 그대로예요.<br>
-        • <b>액체</b>(물): 컵에 담으면 컵 모양, 병에 담으면 병 모양 → 모양은 변하지만 양(부피)은 그대로.<br>
-        • <b>기체</b>(수증기): 방 안에 퍼지면 방 전체를 꽉 채워요 → 모양도 부피도 자유롭게 변함.
+      <div class="box blue">
+        <b>💡 기체만 압축이 잘 되는 이유</b>
+        입자 사이 거리가 멀어서 누르면 가까워질 수 있음!<br>
+        고체·액체는 이미 가까워서 압축 안 됨
       </div>
 
-      <h3>⭐ 입자 모형과 상태별 특징 (심화)</h3>
-      <div class="easy">
-        <span class="lbl">💡 핵심 개념</span>
-        물질의 상태는 <b>입자의 운동, 배열, 입자 사이의 거리</b>로 구분해요. 입자 사이에 서로 잡아당기는 힘이 있는데, 이 힘은 <b>고체 > 액체 > 기체</b> 순으로 세요!
-      </div>
-      <table>
-        <tr><th>구분</th><th>고체</th><th>액체</th><th>기체</th></tr>
-        <tr><td>입자 운동</td><td>제자리에서 진동</td><td>비교적 활발함</td><td>매우 활발함</td></tr>
-        <tr><td>입자 배열</td><td><strong>규칙적</strong></td><td>고체보다 불규칙적</td><td><strong>매우 불규칙적</strong></td></tr>
-        <tr><td>입자 사이 거리</td><td><strong>매우 가까움</strong></td><td>고체보다 조금 멈</td><td><strong>매우 멈</strong></td></tr>
-        <tr><td>입자 사이 힘</td><td>매우 강함</td><td>고체보다 약함</td><td>거의 작용 안 함</td></tr>
-        <tr><td>압축</td><td>안 됨</td><td>거의 안 됨</td><td><strong>잘 됨</strong></td></tr>
-      </table>
-      <div class="tip">🔑 <b>기체만 압축이 잘 되는 이유</b>: 입자 사이 거리가 매우 멀어서 눌리면 거리가 가까워질 수 있어요. 고체·액체는 이미 가까워서 더 이상 압축 안 됨!</div>
-      <div class="ex-box">
-        <span class="lbl">📌 시험에 나오는 예</span>
-        • "입자 배열이 가장 규칙적인 상태" → <b>고체</b><br>
-        • "입자 사이의 거리가 매우 멀다" → <b>기체</b><br>
-        • "압력을 가해도 쉽게 압축되지 않는다" → <b>고체, 액체</b><br>
-        • "입자 운동이 가장 활발한 상태" → <b>기체</b>
-      </div>
-
-      <h3>상태 변화의 종류 (6가지)</h3>
+      <!-- 2-2. 확산과 증발 -->
+      <h3>2. 확산과 증발</h3>
       <ul>
-        <li><strong>융해</strong>: 고체 → 액체 &nbsp;(얼음이 <b>녹아</b> 물이 됨)</li>
-        <li><strong>응고</strong>: 액체 → 고체 &nbsp;(물이 <b>얼어</b> 얼음이 됨)</li>
-        <li><strong>기화</strong>: 액체 → 기체 &nbsp;(물이 <b>끓거나 증발</b>해 수증기가 됨)</li>
-        <li><strong>액화</strong>: 기체 → 액체 &nbsp;(수증기가 <b>식어</b> 물방울이 됨)</li>
-        <li><strong>승화</strong>: 고체 ↔ 기체 &nbsp;(액체를 안 거치고 바로 변함)</li>
+        <li><strong>확산</strong>: 입자가 스스로 퍼져나가는 현상 (냄새가 퍼짐)</li>
+        <li><strong>증발</strong>: 액체 표면에서 기체로 변하는 현상 (빨래 마름)</li>
+        <li>둘 다 온도가 높을수록 빠름</li>
       </ul>
 
-      <h3>⭐ A~F 상태 변화 다이어그램 (시험 필수!)</h3>
-      <div class="arrow-demo">
-        <b>상태 변화 삼각형</b> (이 그림이 시험에 자주 나와요!):<br><br>
-        <span style="font-size:17px; line-height:2;">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>기체</b><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A↗&nbsp;&nbsp;&nbsp;↘D<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B↙&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↖C<br>
-        <b>고체</b>&nbsp;⟵E━━F⟶&nbsp;<b>액체</b>
-        </span><br><br>
-        <table>
-          <tr><th>기호</th><th>변화</th><th>이름</th><th>열에너지</th></tr>
-          <tr><td>A</td><td>고체→기체</td><td><b>승화</b></td><td>흡수</td></tr>
-          <tr><td>B</td><td>기체→고체</td><td><b>승화</b></td><td>방출</td></tr>
-          <tr><td>C</td><td>액체→기체</td><td><b>기화</b></td><td>흡수</td></tr>
-          <tr><td>D</td><td>기체→액체</td><td><b>액화</b></td><td>방출</td></tr>
-          <tr><td>E</td><td>액체→고체</td><td><b>응고</b></td><td>방출</td></tr>
-          <tr><td>F</td><td>고체→액체</td><td><b>융해</b></td><td>흡수</td></tr>
-        </table>
+      <!-- 2-3. 상태 변화 6가지 -->
+      <h3>3. 상태 변화의 종류 (6가지) ⭐필수 암기</h3>
+      <div style="text-align:center; margin: 16px 0;">
+        <img src="state-change.png" alt="물질의 상태 변화" style="max-width:100%; border-radius:12px;">
       </div>
-      <div class="tip">
-        🔑 <b>가열할 때 일어나는 상태 변화</b>: A(승화), C(기화), F(융해) — 열 흡수<br>
-        🔑 <b>냉각할 때 일어나는 상태 변화</b>: B(승화), D(액화), E(응고) — 열 방출
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 시험 빈출 예시</span>
-        • "드라이아이스가 작아진다" → <b>A (승화, 고→기)</b><br>
-        • "차가운 컵 표면에 물방울이 맺힌다" → <b>D (액화, 기→액)</b><br>
-        • "아이스크림이 녹는다" → <b>F (융해, 고→액)</b><br>
-        • "안경에 김이 서린다" → <b>D (액화, 기→액)</b><br>
-        • "겨울 창문에 성에가 낀다" → <b>B (승화, 기→고)</b>
+      <table>
+        <tr><th>변화</th><th>이름</th><th>열에너지</th><th>예시</th></tr>
+        <tr><td>고체→액체</td><td><strong>융해</strong></td><td>흡수</td><td>얼음이 녹음</td></tr>
+        <tr><td>액체→고체</td><td><strong>응고</strong></td><td>방출</td><td>물이 얼음 됨</td></tr>
+        <tr><td>액체→기체</td><td><strong>기화</strong></td><td>흡수</td><td>물이 끓음, 빨래 마름</td></tr>
+        <tr><td>기체→액체</td><td><strong>액화</strong></td><td>방출</td><td>컵 표면 물방울</td></tr>
+        <tr><td>고체→기체</td><td><strong>승화</strong></td><td>흡수</td><td>드라이아이스</td></tr>
+        <tr><td>기체→고체</td><td><strong>승화</strong></td><td>방출</td><td>성에</td></tr>
+      </table>
+      <div class="box blue">
+        <b>💡 외우는 꿀팁</b>
+        융<strong>해</strong> = 녹<strong>아</strong>서 흐물 / 응<strong>고</strong> = <strong>굳</strong>는다<br>
+        <strong>기</strong>화 = <strong>기</strong>체 됨 / <strong>액</strong>화 = <strong>액</strong>체 됨<br>
+        승화 = 액체 단계를 <strong>건너뜀</strong>!
       </div>
 
-      <div class="easy">
-        <span class="lbl">💡 상태 변화 이름, 이렇게 외워!</span>
-        <b>"뭐가 되냐"만 보면 돼!</b><br><br>
-        🧊 <b>고체 ↔ 액체</b><br>
-        • 녹는다 (얼음→물) = <b>융해</b> — 녹<b>아서</b> 흐물흐물 = 융<b>해</b><br>
-        • 굳는다 (물→얼음) = <b>응고</b> — 꽁꽁 <b>굳</b>는다 = 응<b>고</b><br><br>
-        💨 <b>액체 ↔ 기체</b><br>
-        • 날아간다 (물→수증기) = <b>기화</b> — <b>기</b>체가 된다 = <b>기</b>화<br>
-        • 맺힌다 (수증기→물방울) = <b>액화</b> — <b>액</b>체가 된다 = <b>액</b>화<br><br>
-        ✨ <b>승화</b> (액체를 건너뜀!)<br>
-        • 고체 → 기체: 드라이아이스가 연기처럼 사라짐<br>
-        • 기체 → 고체: 겨울 창문에 성에가 낌<br>
-        • 둘 다 <b>승화</b>! 액체 단계를 <b>뛰어넘어</b> 승천~
+      <!-- 2-4. 상태 변화와 열에너지 -->
+      <h3>4. 상태 변화와 열에너지 ⭐시험 단골</h3>
+      <div class="box blue">
+        <b>💡 핵심 규칙</b>
+        • 입자를 <strong>자유롭게</strong> (고→액→기): <strong>열 흡수</strong> → 주변 시원<br>
+        • 입자를 <strong>가두기</strong> (기→액→고): <strong>열 방출</strong> → 주변 따뜻
       </div>
-      <div class="ex-box">
-        <span class="lbl">📌 생활 속 예시</span>
-        • <b>융해</b>: 아이스크림이 녹음, 고드름이 녹음, 용광로에서 철이 녹음<br>
-        • <b>응고</b>: 물을 얼려 얼음 만듦, 촛농이 굳음, 고깃국 기름이 굳음<br>
-        • <b>기화</b>: 빨래가 마름, 물이 끓어 김이 남, 어항 속 물이 줄어듦<br>
-        • <b>액화</b>: 차가운 음료수 컵 겉면에 물방울, 새벽 이슬, 목욕탕 천장 물방울<br>
-        • <b>승화</b>: 드라이아이스가 연기처럼 사라짐(고→기), 겨울 창문에 성에(기→고), 서랍 속 나프탈렌이 작아짐
+      <table>
+        <tr><th>열 흡수 (주변 시원)</th><th>열 방출 (주변 따뜻)</th></tr>
+        <tr><td>융해, 기화, 승화(고→기)</td><td>응고, 액화, 승화(기→고)</td></tr>
+      </table>
+
+      <div class="box green">
+        <b>📌 열 흡수 예시 (시원해짐)</b>
+        • 음료수에 얼음 넣으면 시원 (융해)<br>
+        • 물놀이 후 물 밖에서 추움 (기화)<br>
+        • 드라이아이스 근처가 시원 (승화)
+      </div>
+      <div class="box green">
+        <b>📌 열 방출 예시 (따뜻해짐)</b>
+        • 이글루에 물 뿌리면 따뜻 (응고)<br>
+        • 소나기 전 후텁지근 (액화)<br>
+        • 눈 올 때 포근함 (승화)
       </div>
 
-      <h3>⭐ 상태 변화와 입자 배열의 변화 (핵심!)</h3>
+      <!-- 2-5. 상태 변화와 입자 -->
+      <h3>5. 상태 변화 시 변하는 것 vs 안 변하는 것</h3>
+      <table>
+        <tr><th>변하지 않는 것 ❌</th><th>변하는 것 ⭕</th></tr>
+        <tr><td>입자의 종류, 크기, 개수</td><td>입자의 운동, 배열</td></tr>
+        <tr><td>물질의 성질, <strong>질량</strong></td><td>입자 사이 거리 → <strong>부피</strong></td></tr>
+      </table>
+      <div class="box yellow">
+        <b>⚠️ 물의 예외!</b>
+        대부분 물질: 얼면 부피 감소<br>
+        <strong>물: 얼면 부피 증가!</strong> (약 10%)<br>
+        → 수도관 터짐, 얼음이 물에 뜸
+      </div>
+
+      <!-- 2-6. 녹는점, 끓는점 -->
+      <h3>6. 녹는점, 끓는점, 어는점</h3>
       <ul>
-        <li>상태가 변해도 <strong>입자의 종류·크기·개수·성질·질량은 그대로예요.</strong></li>
-        <li>변하는 것은 <strong>입자 운동, 입자 배열, 입자 사이의 거리</strong> → 그래서 <b>부피</b>가 달라져요.</li>
+        <li><strong>녹는점</strong> = <strong>어는점</strong>: 고체↔액체 변하는 온도 (물: 0℃)</li>
+        <li><strong>끓는점</strong>: 액체→기체 변하는 온도 (물: 100℃)</li>
+        <li>같은 물질이면 양에 관계없이 <strong>일정</strong></li>
       </ul>
-      <div class="arrow-demo">
-        <b>상태 변화가 일어날 때 변하는 것 vs 변하지 않는 것</b><br><br>
-        <table>
-          <tr><th>변하지 않는 것 ❌</th><th>변하는 것 ⭕</th></tr>
-          <tr><td>• 입자의 <b>종류</b></td><td>• 입자의 <b>운동</b> (활발함 정도)</td></tr>
-          <tr><td>• 입자의 <b>개수</b></td><td>• 입자의 <b>배열</b></td></tr>
-          <tr><td>• 물질의 <b>성질</b></td><td>• 입자 사이의 <b>거리</b></td></tr>
-          <tr><td>• 물질의 <b>질량</b></td><td>→ 그 결과 물질의 <b>부피</b></td></tr>
-        </table>
-      </div>
-      <div class="easy">
-        <span class="lbl">💡 헷갈리지 마세요</span>
-        얼음이 녹아 물이 돼도 <b>"물 알갱이 자체"는 하나도 안 변해요.</b> 그냥 입자들이 서로 <b>더 가까워지거나 멀어질 뿐</b>이에요. 그래서 무게(질량)는 그대로고, 부피(공간 차지 크기)만 바뀌는 거예요.
-      </div>
-      <div class="ex-box">
-        <span class="lbl">📌 상태 변화에 따른 입자 운동·배열·거리</span>
-        <table>
-          <tr><th>열에너지</th><th>입자 운동</th><th>입자 배열</th><th>입자 사이 거리</th></tr>
-          <tr><td><b>흡수</b> (융해·기화·승화 고→기)</td><td>활발해짐</td><td>불규칙적으로 됨</td><td>멀어짐</td></tr>
-          <tr><td><b>방출</b> (응고·액화·승화 기→고)</td><td>둔해짐</td><td>규칙적으로 됨</td><td>가까워짐</td></tr>
-        </table>
-      </div>
 
-      <h3>⭐ 물의 예외 현상 (시험 단골!)</h3>
-      <div class="tip">
-        ❗ <b>물은 특별해요!</b> 대부분 물질은 응고하면(얼면) 부피가 <b>감소</b>하지만,<br>
-        <b>물은 응고하면 부피가 증가</b>해요! (물 < 얼음 < 수증기 순으로 부피 증가)
+      <!-- 2-7. 가열/냉각 곡선 -->
+      <h3>7. 가열 곡선과 냉각 곡선 ⭐그래프 해석</h3>
+      <div class="box blue">
+        <b>💡 핵심 포인트</b>
+        • <strong>수평 구간</strong> = 상태 변화 중 (온도 안 변함)<br>
+        • <strong>기울어진 구간</strong> = 온도 변화 중<br>
+        • 수평 구간에서 열은 <strong>상태 변화에 사용</strong>됨
       </div>
       <table>
-        <tr><th>구분</th><th>일반적인 물질</th><th>물 (예외!)</th></tr>
-        <tr><td>응고할 때 부피</td><td>감소</td><td><b>증가</b> (약 10%)</td></tr>
-        <tr><td>부피 순서</td><td>고체 < 액체 < 기체</td><td><b>물 < 얼음 < 수증기</b></td></tr>
+        <tr><th>구간</th><th>상태</th><th>온도</th><th>열 사용</th></tr>
+        <tr><td>기울어짐 ↗</td><td>한 가지 상태</td><td>올라감</td><td>온도 상승</td></tr>
+        <tr><td>수평 ━</td><td>두 상태 공존</td><td><strong>일정</strong></td><td><strong>상태 변화</strong></td></tr>
       </table>
-      <div class="ex-box">
-        <span class="lbl">📌 물이 얼면 부피가 커지는 예시</span>
-        • 겨울에 <b>수도관이 터진다</b> → 물이 얼면서 부피가 커지니까<br>
-        • 페트병에 물을 꽉 채워 얼리면 <b>병이 부풀거나 터진다</b><br>
-        • <b>얼음이 물에 뜬다</b> → 부피가 커지면 밀도가 작아지니까<br>
-        • 비커에 얼음을 완전히 녹이면 <b>수면이 내려간다</b>
-      </div>
-      <div class="easy">
-        <span class="lbl">💡 왜 물만 이럴까?</span>
-        물이 얼 때 입자들이 <b>빈 공간이 많은 구조</b>로 배열돼요. 그래서 같은 양의 물질인데도 얼음이 더 넓은 공간을 차지해요.
+      <div class="box yellow">
+        <b>⚠️ 자주 나오는 질문</b>
+        "열을 주는데 왜 온도가 안 올라가요?"<br>
+        → 열이 온도 올리는 데 안 쓰이고 <strong>상태 변화에 쓰이는 중</strong>!
       </div>
 
-      <h3>⭐ 상태 변화와 열에너지 (서술형 단골!)</h3>
-      <div class="easy">
-        <span class="lbl">💡 규칙 한 줄</span>
-        입자를 <b>더 자유롭게(고→액→기)</b> 만들려면 <b>열을 흡수</b>해요(주변은 시원해짐). 반대로 <b>더 붙게(기→액→고)</b> 만들면 <b>열을 방출</b>해요(주변은 따뜻해짐).
-      </div>
+      <!-- 2-8. 김 vs 수증기 -->
+      <h3>8. 김 vs 수증기</h3>
       <table>
-        <tr><th>구분</th><th>열 흡수</th><th>열 방출</th></tr>
-        <tr><td>상태 변화</td><td>융해·기화·승화(고→기)</td><td>응고·액화·승화(기→고)</td></tr>
-        <tr><td>열에너지 이름</td><td>융해열·기화열·승화열 흡수</td><td>응고열·액화열·승화열 방출</td></tr>
-        <tr><td>주변 온도</td><td><b>낮아짐</b> (시원)</td><td><b>높아짐</b> (따뜻)</td></tr>
-        <tr><td>입자 운동</td><td>활발해짐</td><td>둔해짐</td></tr>
-        <tr><td>입자 배열</td><td>불규칙적으로 됨</td><td>규칙적으로 됨</td></tr>
-        <tr><td>입자 사이 거리</td><td>멀어짐</td><td>가까워짐</td></tr>
+        <tr><th></th><th>수증기</th><th>김</th></tr>
+        <tr><td>상태</td><td><strong>기체</strong></td><td><strong>액체</strong> (물방울)</td></tr>
+        <tr><td>눈에</td><td>안 보임 (투명)</td><td>보임 (하얗게)</td></tr>
       </table>
-      <div class="easy">
-        <span class="lbl">💡 아주 쉽게 (돈으로 비유)</span>
-        입자를 <b>자유롭게 풀어주려면 에너지가 "든다"</b> → 그래서 주변에서 열을 <b>가져옴(흡수)</b> → 주변은 <b>추워짐</b>.<br>
-        반대로 입자를 <b>다시 붙여 가두면 에너지가 "남는다"</b> → 주변에 열을 <b>내놓음(방출)</b> → 주변은 <b>따뜻해짐</b>.<br>
-        한마디로: <b>풀어주기 = 흡수(추워짐)</b>, <b>붙이기 = 방출(따뜻해짐)</b>.
-      </div>
 
-      <h3>🏠 열에너지를 흡수·방출하는 상태 변화의 예 (생활 속 응용)</h3>
-      <div class="easy">
-        <span class="lbl">💡 핵심</span>
-        상태가 변할 때 <b>열을 흡수하면 주변을 시원하게</b>, <b>열을 방출하면 주변을 따뜻하게</b> 만들 수 있어요. 이 성질을 생활에 이용해요.
-      </div>
-      <table>
-        <tr><th colspan="2">열을 흡수 → 주변 온도 낮아짐 (시원)</th></tr>
-        <tr><td><b>융해</b><br>(용해열 흡수)</td><td>• 음료수에 얼음을 넣으면 시원해짐<br>• 더운 여름날 얼음 조각상 옆에 있으면 시원함<br>• 아이스박스에 얼음을 채워 음식물 보관</td></tr>
-        <tr><td><b>기화</b><br>(기화열 흡수)</td><td>• 분수대 근처에 있으면 시원함<br>• 더운 여름철 도로에 물을 뿌려 시원함<br>• 물놀이 하고 물 밖으로 나오면 춥게 느껴짐<br>• 사용하고 난 부탄 가스통을 만져 보면 차가움<br>• 알코올을 묻힌 솜으로 손등을 문지르면 시원함<br>• 더운 사막에서 시원한 물을 얻기 위해 양가죽으로 만든 주머니에 물을 보관</td></tr>
-        <tr><td><b>승화(고→기)</b><br>(승화열 흡수)</td><td>• 공연장에서 드라이아이스를 뿌린 무대 근처에 있으면 시원함<br>• 아이스크림을 포장할 때 드라이아이스를 넣어 두면 아이스크림이 잘 녹지 않음</td></tr>
-        <tr><th colspan="2">열을 방출 → 주변 온도 높아짐 (따뜻)</th></tr>
-        <tr><td><b>응고</b><br>(응고열 방출)</td><td>• 이글루 안에 물을 뿌려 내부를 따뜻하게 함<br>• 추운 겨울철 오렌지의 냉해를 막기 위해 물을 뿌림<br>• 추운 겨울철 과일이 어는 것을 막기 위해 과일 저장 창고에 물이 든 그릇을 놓아둠</td></tr>
-        <tr><td><b>액화</b><br>(액화열 방출)</td><td>• 소나기가 내리기 전 날씨가 후텁지근함<br>• 더운 여름에 냉방이 잘된 곳에서 밖으로 나오면 후텁지근하게 느껴짐</td></tr>
-        <tr><td><b>승화(기→고)</b><br>(승화열 방출)</td><td>• 눈이 내릴 때 날씨가 포근해짐</td></tr>
-      </table>
-      <div class="tip">🔑 서술형 쓰는 법: "① 어떤 상태 변화인지(예: 기화) → ② 열을 흡수/방출 → ③ 그래서 주변이 시원/따뜻" 이 <b>3단계 순서</b>로 쓰면 만점이에요.</div>
-
-      <h3>🌡️ 끓는점, 녹는점, 어는점 (정의와 특징)</h3>
-      <table>
-        <tr><th>용어</th><th>정의</th><th>특징</th></tr>
-        <tr><td><b>녹는점</b></td><td>고체 물질이 녹는 동안 일정하게 유지되는 온도</td><td rowspan="2">같은 물질의 녹는점과 어는점은 <b>서로 같다</b><br>(물: 0℃, 에탄올: -114℃)</td></tr>
-        <tr><td><b>어는점</b></td><td>액체 물질이 어는 동안 일정하게 유지되는 온도</td></tr>
-        <tr><td><b>끓는점</b></td><td>액체 물질이 끓는 동안 일정하게 유지되는 온도</td><td>물: 100℃, 에탄올: 78℃</td></tr>
-      </table>
-      <div class="tip">
-        🔑 <b>녹는점/끓는점의 특징</b><br>
-        • 같은 물질인 경우, 물질의 양에 관계없이 <b>녹는점(어는점)과 끓는점은 일정</b>해요.<br>
-        • 물질의 양이 많을수록 녹기(끓기) 시작하는 데 걸리는 <b>시간은 길어</b>져요.
-      </div>
-
-      <h3>⭐ 가열 곡선과 냉각 곡선 (그래프 해석 필수!)</h3>
-      <ul>
-        <li>상태가 변하는 <strong>동안</strong>에는 열을 계속 주고받아도 <strong>온도가 안 변해요.</strong></li>
-        <li>녹는점(융해)·끓는점(기화)에서 멈춤 → 그래프에서 <strong>평평한(수평) 구간</strong></li>
-      </ul>
-      <div class="arrow-demo">
-        <b>얼음을 계속 가열할 때 온도 그래프 (가열 곡선)</b>:<br><br>
-        <span class="big">
-        구간A(↗) → 구간B(▬▬) → 구간C(↗) → 구간D(▬▬) → 구간E(↗)
-        </span><br><br>
-        <table>
-          <tr><th>구간</th><th>물질의 상태</th><th>온도</th><th>열에너지</th><th>상태 변화</th></tr>
-          <tr><td>A</td><td>고체(얼음)</td><td>↗ 올라감</td><td>흡수 → 온도 상승에 사용</td><td>없음</td></tr>
-          <tr><td>B</td><td><b>고체+액체</b></td><td><b>일정</b> (0℃=녹는점)</td><td>흡수 → <b>융해에 사용</b></td><td><b>융해</b></td></tr>
-          <tr><td>C</td><td>액체(물)</td><td>↗ 올라감</td><td>흡수 → 온도 상승에 사용</td><td>없음</td></tr>
-          <tr><td>D</td><td><b>액체+기체</b></td><td><b>일정</b> (100℃=끓는점)</td><td>흡수 → <b>기화에 사용</b></td><td><b>기화</b></td></tr>
-          <tr><td>E</td><td>기체(수증기)</td><td>↗ 올라감</td><td>흡수 → 온도 상승에 사용</td><td>없음</td></tr>
-        </table>
-      </div>
-      <div class="arrow-demo">
-        <b>물을 냉각할 때 온도 그래프 (냉각 곡선)</b>:<br><br>
-        <span class="big">
-        구간A(↘) → 구간B(▬▬) → 구간C(↘)
-        </span><br><br>
-        <table>
-          <tr><th>구간</th><th>물질의 상태</th><th>온도</th><th>열에너지</th><th>상태 변화</th></tr>
-          <tr><td>A</td><td>액체(물)</td><td>↘ 내려감</td><td>방출 → 온도 하강</td><td>없음</td></tr>
-          <tr><td>B</td><td><b>액체+고체</b></td><td><b>일정</b> (0℃=어는점)</td><td>방출 → <b>응고에 사용</b></td><td><b>응고</b></td></tr>
-          <tr><td>C</td><td>고체(얼음)</td><td>↘ 내려감</td><td>방출 → 온도 하강</td><td>없음</td></tr>
-        </table>
-      </div>
-      <div class="easy">
-        <span class="lbl">💡 왜 온도가 안 올라갈까?</span>
-        얼음을 계속 가열해도 <b>다 녹기 전까지 0℃에서 멈춰</b> 있어요. 받은 열이 온도를 올리는 데 안 쓰이고, <b>얼음을 물로 바꾸는 데(상태 변화)에 전부 쓰이기</b> 때문이에요. 다 녹은 뒤에야 다시 온도가 올라가요.<br>
-        <b>비유:</b> 교실 전체가 자리에서 일어나는 중엔 "앞으로 못 나가고" 제자리에서 바뀌는 것과 같아요. 다 일어난 뒤에야 다시 앞으로 나아가죠.
-      </div>
-      <div class="tip">🔑 평평한 구간에서 열은 사라지는 게 아니라 <b>상태를 바꾸는 데 쓰이는 중</b>이에요. 그래서 "열을 주는데 왜 온도가 그대로지?"의 답은 <b>"상태 변화에 열을 쓰고 있어서"</b>예요.</div>
-      <div class="ex-box">
-        <span class="lbl">📌 그래프 문제 풀이 팁</span>
-        • <b>수평 구간</b> = 상태 변화 중 (두 상태가 함께 존재)<br>
-        • <b>기울어진 구간</b> = 온도 변화 중 (한 가지 상태만 존재)<br>
-        • 수평 구간에서 열은 <b>상태 변화</b>에 사용됨<br>
-        • 녹는점에서는 고체+액체, 끓는점에서는 액체+기체가 함께 존재
-      </div>
-
-      <h3>🏭 에어컨과 냉장고, 증기 난방기의 원리 (심화)</h3>
-      <div class="easy">
-        <span class="lbl">💡 핵심 원리</span>
-        에어컨·냉장고·증기난방기는 모두 <b>상태 변화 시 열에너지가 흡수되거나 방출되는 원리</b>를 이용해요!
-      </div>
-      <div class="arrow-demo">
-        <b>🧊 에어컨·냉장고의 원리</b> (기화열 흡수 이용)<br><br>
-        <table>
-          <tr><th>위치</th><th>상태 변화</th><th>열에너지</th><th>온도 변화</th></tr>
-          <tr><td><b>실내기(증발기)</b></td><td>액체 냉매 → 기체 (<b>기화</b>)</td><td><b>열 흡수</b></td><td>실내 온도 ↓ (시원)</td></tr>
-          <tr><td><b>실외기(응축기)</b></td><td>기체 냉매 → 액체 (<b>액화</b>)</td><td><b>열 방출</b></td><td>주위 온도 ↑</td></tr>
-        </table>
-        → 실내에서 기화열을 흡수해서 실내가 시원해지고, 실외에서 액화열을 방출해서 실외가 더워져요.
-      </div>
-      <div class="arrow-demo">
-        <b>🔥 증기 난방기의 원리</b> (액화열 방출 이용)<br><br>
-        <table>
-          <tr><th>위치</th><th>상태 변화</th><th>열에너지</th><th>온도 변화</th></tr>
-          <tr><td><b>보일러</b></td><td>물 → 수증기 (<b>기화</b>)</td><td>열 흡수</td><td>주위 온도 ↓</td></tr>
-          <tr><td><b>증기 난방기</b></td><td>수증기 → 물 (<b>액화</b>)</td><td><b>열 방출</b></td><td>실내 온도 ↑ (따뜻)</td></tr>
-        </table>
-        → 보일러에서 만든 수증기가 난방기에서 액화하면서 액화열을 방출해 실내를 따뜻하게 해요.
-      </div>
-      <div class="tip">
-        🔑 <b>암기 포인트</b><br>
-        • 에어컨·냉장고: 실내기에서 <b>기화(열 흡수)</b> → 시원 / 실외기에서 <b>액화(열 방출)</b><br>
-        • 증기 난방기: 보일러에서 <b>기화</b> / 난방기에서 <b>액화(열 방출)</b> → 따뜻
-      </div>
-
-      <h3>🔬 김과 수증기의 차이 (자주 혼동!)</h3>
-      <table>
-        <tr><th>구분</th><th>수증기</th><th>김</th></tr>
-        <tr><td>상태</td><td><b>기체</b></td><td><b>액체</b> (작은 물방울)</td></tr>
-        <tr><td>보이는가?</td><td><b>안 보임</b> (투명)</td><td><b>보임</b> (하얗게 보임)</td></tr>
-        <tr><td>생성 과정</td><td>물이 기화</td><td>수증기가 공기 중에서 <b>액화</b>하여 생김</td></tr>
-      </table>
-      <div class="easy">
-        <span class="lbl">💡 쉽게 구별하기</span>
-        물이 끓을 때 주전자 주둥이 바로 위는 <b>투명</b>해요 (= 수증기, 기체). 조금 떨어진 곳에서 <b>하얗게 보이는 것</b>이 김(= 물방울, 액체)이에요.
-      </div>
     </div>
   </details>
 
   <p class="note">
-    ⚠️ 이 요약은 2022 개정 교육과정 중1 과학 2학기 범위(물질의 상태 변화 · 여러 가지 힘)로 만들었어요.<br>
-    교과서(천재교육, 정대홍) 113~190쪽 기준이에요. 시험 잘 봐요! 💪
+    2022 개정 교육과정 · 천재교육(정대홍) 113~190쪽 기준<br>
+    시험 잘 봐요! 💪
   </p>
 </div>
 
 <script>
-  var btn = document.getElementById('toggleAll');
-  var allOpen = false;
-  btn.addEventListener('click', function () {
-    allOpen = !allOpen;
-    document.querySelectorAll('details').forEach(function (d) {
-      d.open = allOpen;
-    });
-  });
+  document.getElementById('toggleAll').onclick = function() {
+    var details = document.querySelectorAll('details');
+    var allOpen = [...details].every(d => d.open);
+    details.forEach(d => d.open = !allOpen);
+  };
 </script>
 </body>
 </html>
