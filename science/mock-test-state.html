@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧊 물질의 상태 변화 - 실전 모의고사</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ff9800;
+        }
+        .exam-info {
+            text-align: center;
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid #ff9800;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .exam-info p { margin: 5px 0; font-size: 0.95rem; }
+        .timer {
+            font-size: 1.5rem;
+            color: #ff7043;
+            font-weight: bold;
+        }
+        .question-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff9800;
+        }
+        .question-box.subjective {
+            border-left-color: #81c784;
+        }
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .q-number {
+            background: #ff9800;
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .q-number.subjective {
+            background: #81c784;
+        }
+        .q-points {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .option:hover {
+            background: rgba(255, 152, 0, 0.1);
+            border-color: rgba(255, 152, 0, 0.3);
+        }
+        .option.selected {
+            background: rgba(255, 152, 0, 0.2);
+            border-color: #ff9800;
+        }
+        .option.correct {
+            background: rgba(129, 199, 132, 0.3);
+            border-color: #81c784;
+        }
+        .option.wrong {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: #f44336;
+        }
+        .option-label {
+            background: rgba(255,255,255,0.1);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .option-text {
+            padding-top: 3px;
+            line-height: 1.5;
+        }
+        .subjective-answer {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(129, 199, 132, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 80px;
+        }
+        .subjective-answer:focus {
+            outline: none;
+            border-color: #81c784;
+        }
+        .answer-box {
+            display: none;
+            background: rgba(129, 199, 132, 0.1);
+            border: 1px solid #81c784;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .answer-box.show { display: block; }
+        .answer-box h4 {
+            color: #81c784;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .answer-box p {
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: #1a1a2e;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4);
+        }
+        .btn-show {
+            background: linear-gradient(135deg, #81c784, #66bb6a);
+            color: #1a1a2e;
+        }
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .result-box {
+            display: none;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(129, 199, 132, 0.2));
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-box.show { display: block; }
+        .result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff9800;
+        }
+        .result-detail {
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .back-link a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+        .box-info {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #ff9800;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        .condition-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px dashed #ffc107;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: rgba(255, 152, 0, 0.2);
+        }
+        .section-title {
+            background: linear-gradient(90deg, #ff9800, transparent);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 30px 0 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .state-diagram {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧊 물질의 상태 변화 - 실전 모의고사</h1>
+        
+        <div class="exam-info">
+            <p><strong>범위:</strong> 물질의 세 가지 상태 / 상태 변화의 종류 / 상태 변화와 열에너지</p>
+            <p><strong>문항:</strong> 객관식 20문제 + 서술형 5문제 (총 25문제)</p>
+            <p><strong>시간:</strong> 45분</p>
+            <p class="timer">⏱️ <span id="timer">45:00</span></p>
+        </div>
+
+        <div id="result-box" class="result-box">
+            <div class="result-score"><span id="score">0</span>점</div>
+            <div class="result-detail">
+                객관식: <span id="obj-score">0</span>/20 | 
+                총점: <span id="total">0</span>/100
+            </div>
+        </div>
+
+        <!-- ========== 객관식 (1~20번) ========== -->
+        <div class="section-title">📝 객관식 (1~20번, 각 4점)</div>
+
+        <!-- 1번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">1번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>고체</strong>의 특징으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">담는 용기에 따라 모양이 변한다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">압력을 가하면 부피가 쉽게 줄어든다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">모양과 부피가 일정하다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">입자 사이의 거리가 매우 멀다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">입자가 자유롭게 움직인다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>고체는 입자가 규칙적으로 배열되어 있어 <strong>모양과 부피가 일정</strong>하다. 액체는 모양만 변하고, 기체는 모양과 부피 모두 변한다.</p>
+            </div>
+        </div>
+
+        <!-- 2번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">2번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>기체</strong>의 특징으로 옳지 <u>않은</u> 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">담는 용기에 따라 모양과 부피가 변한다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">입자가 규칙적으로 배열되어 있다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">압력을 가하면 부피가 쉽게 줄어든다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">입자 사이의 거리가 매우 멀다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">입자가 자유롭게 움직인다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>입자가 <strong>규칙적으로 배열</strong>되어 있는 것은 <strong>고체</strong>의 특징이다. 기체는 입자가 불규칙하게 배열되어 자유롭게 운동한다.</p>
+            </div>
+        </div>
+
+        <!-- 3번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">3번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 표는 물질의 세 가지 상태를 비교한 것이다. (가)~(다)에 해당하는 상태를 바르게 짝지은 것은?
+                <table>
+                    <tr><th>구분</th><th>모양</th><th>부피</th><th>압축</th></tr>
+                    <tr><td>(가)</td><td>변함</td><td>일정</td><td>어려움</td></tr>
+                    <tr><td>(나)</td><td>일정</td><td>일정</td><td>어려움</td></tr>
+                    <tr><td>(다)</td><td>변함</td><td>변함</td><td>쉬움</td></tr>
+                </table>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">(가) 고체, (나) 액체, (다) 기체</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">(가) 고체, (나) 기체, (다) 액체</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">(가) 기체, (나) 고체, (다) 액체</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">(가) 액체, (나) 고체, (다) 기체</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">(가) 액체, (나) 기체, (다) 고체</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>(가) 모양 변함, 부피 일정 → <strong>액체</strong><br>
+                (나) 모양·부피 일정 → <strong>고체</strong><br>
+                (다) 모양·부피 변함, 압축 쉬움 → <strong>기체</strong></p>
+            </div>
+        </div>
+
+        <!-- 4번 -->
+        <div class="question-box" data-answer="1" data-points="4">
+            <div class="q-header">
+                <span class="q-number">4번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                고체가 액체로 변하는 상태 변화를 무엇이라 하는가?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">융해</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">응고</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">기화</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">액화</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">승화</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ①</h4>
+                <p><strong>융해</strong>: 고체 → 액체 (예: 얼음이 녹아 물이 됨)<br>
+                <strong>응고</strong>: 액체 → 고체<br>
+                <strong>기화</strong>: 액체 → 기체<br>
+                <strong>액화</strong>: 기체 → 액체</p>
+            </div>
+        </div>
+
+        <!-- 5번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">5번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>승화</strong>의 예로 옳은 것을 모두 고르면?
+                <div class="box-info">
+                    ㄱ. 옷장의 나프탈렌이 점점 작아진다.<br>
+                    ㄴ. 냉동실의 얼음이 작아진다.<br>
+                    ㄷ. 드라이아이스에서 하얀 연기가 난다.<br>
+                    ㄹ. 젖은 빨래가 마른다.
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">ㄱ, ㄴ</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">ㄱ, ㄷ</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">ㄴ, ㄷ</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">ㄴ, ㄹ</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">ㄱ, ㄴ, ㄷ</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p><strong>승화(고체→기체)</strong>: ㄱ. 나프탈렌, ㄴ. 냉동실 얼음(승화로 작아짐), ㄷ. 드라이아이스<br>
+                ㄹ. 젖은 빨래는 물이 <strong>증발(기화)</strong>하는 것</p>
+            </div>
+        </div>
+
+        <!-- 6번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">6번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>액화</strong> 현상의 예로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">물이 얼어서 얼음이 된다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">아이스크림이 녹는다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">차가운 음료수 컵 표면에 물방울이 맺힌다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">물이 끓어서 수증기가 된다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">드라이아이스가 작아진다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p><strong>액화</strong>: 기체 → 액체. 공기 중의 수증기(기체)가 차가운 컵 표면에서 물방울(액체)로 변한다.<br>
+                ① 응고, ② 융해, ④ 기화, ⑤ 승화</p>
+            </div>
+        </div>
+
+        <!-- 7번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">7번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 현상에서 일어나는 상태 변화를 옳게 짝지은 것은?
+                <div class="box-info">
+                    (가) 이슬이 맺힌다.<br>
+                    (나) 성에가 생긴다.<br>
+                    (다) 안개가 낀다.
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">(가) 융해, (나) 응고, (다) 액화</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">(가) 액화, (나) 승화, (다) 액화</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">(가) 승화, (나) 액화, (다) 응고</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">(가) 액화, (나) 응고, (다) 기화</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">(가) 기화, (나) 승화, (다) 융해</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>(가) 이슬: 수증기 → 물방울 = <strong>액화</strong><br>
+                (나) 성에: 수증기 → 얼음 결정 = <strong>승화</strong>(기체→고체)<br>
+                (다) 안개: 수증기 → 작은 물방울 = <strong>액화</strong></p>
+            </div>
+        </div>
+
+        <!-- 8번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">8번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                물질의 상태가 변할 때 변하지 <u>않는</u> 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">부피</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">입자 사이의 거리</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">입자의 배열</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">질량</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">입자의 운동 속력</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>상태 변화가 일어나도 입자의 <strong>개수, 크기, 종류</strong>는 변하지 않으므로 <strong>질량은 일정</strong>하다. 부피, 입자 배열, 입자 사이의 거리, 입자의 운동 속력은 변한다.</p>
+            </div>
+        </div>
+
+        <!-- 9번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">9번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                얼음이 녹아 물이 될 때 변화에 대한 설명으로 옳은 것을 모두 고르면?
+                <div class="box-info">
+                    ㄱ. 부피가 줄어든다.<br>
+                    ㄴ. 질량이 줄어든다.<br>
+                    ㄷ. 입자 사이의 거리가 가까워진다.<br>
+                    ㄹ. 입자의 개수가 줄어든다.
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">ㄱ</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">ㄴ, ㄹ</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">ㄱ, ㄴ</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">ㄷ, ㄹ</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">ㄱ, ㄷ</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p>물은 특이하게 얼음(고체)일 때 입자가 육각형 구조를 이루어 빈 공간이 많다. 녹으면 이 구조가 깨지면서 <strong>부피가 줄어들고</strong>, <strong>입자 사이 거리가 가까워진다</strong>.<br>
+                질량과 입자 개수는 변하지 않는다.</p>
+            </div>
+        </div>
+
+        <!-- 10번 -->
+        <div class="question-box" data-answer="1" data-points="4">
+            <div class="q-header">
+                <span class="q-number">10번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 열을 <strong>흡수</strong>하는 상태 변화를 모두 고르면?
+                <div class="box-info">
+                    ㄱ. 융해&nbsp;&nbsp;&nbsp;ㄴ. 응고&nbsp;&nbsp;&nbsp;ㄷ. 기화&nbsp;&nbsp;&nbsp;ㄹ. 액화&nbsp;&nbsp;&nbsp;ㅁ. 승화(고체→기체)
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">ㄱ, ㄷ, ㅁ</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">ㄴ, ㄹ</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">ㄱ, ㄷ</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">ㄴ, ㄹ, ㅁ</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">ㄱ, ㄴ, ㄷ</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ①</h4>
+                <p><strong>열 흡수</strong>: 융해, 기화, 승화(고체→기체) → 입자가 "풀려나는" 변화<br>
+                <strong>열 방출</strong>: 응고, 액화, 승화(기체→고체) → 입자가 "갇히는" 변화</p>
+            </div>
+        </div>
+
+        <!-- 11번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">11번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                손등에 알코올을 바르면 시원하게 느껴지는 까닭으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">알코올이 응고하면서 열을 방출하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">알코올이 승화하면서 열을 방출하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">알코올이 기화하면서 열을 흡수하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">알코올이 액화하면서 열을 흡수하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">알코올이 융해하면서 열을 방출하기 때문이다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>알코올(액체)이 <strong>기화</strong>(증발)하면서 손에서 <strong>열을 흡수</strong>하기 때문에 시원하게 느껴진다.</p>
+            </div>
+        </div>
+
+        <!-- 12번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">12번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 그래프는 얼음을 가열할 때 시간에 따른 온도 변화를 나타낸 것이다. A~E 구간에 대한 설명으로 옳은 것은?
+                <div class="state-diagram">
+                    <pre style="color:#e0e0e0; font-size:0.9rem;">
+온도(℃)
+    │         ___E___
+    │        /
+  100├──────D
+    │      /
+    │     C
+    │    /
+   0├──B
+    │  /
+    │ A
+    └──────────────→ 시간
+                    </pre>
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">A 구간에서 융해가 일어난다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">B 구간에서 융해가 일어난다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">C 구간에서 기화가 일어난다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">D 구간에서 물과 수증기가 함께 존재한다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">E 구간에서 액화가 일어난다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>B구간(0℃ 일정): 얼음 → 물 = <strong>융해</strong>(고체+액체 공존)<br>
+                D구간(100℃ 일정): 물 → 수증기 = <strong>기화</strong>(액체+기체 공존)<br>
+                A, C, E 구간은 온도가 변하는 구간으로 상태 변화가 일어나지 않음</p>
+            </div>
+        </div>
+
+        <!-- 13번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">13번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                위 그래프에서 온도가 일정하게 유지되는 구간에 대한 설명으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">열을 흡수하지 않는다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">열을 방출한다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">입자의 개수가 감소한다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">흡수한 열이 상태 변화에 사용된다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">입자의 운동이 멈춘다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>온도가 일정한 구간에서도 열을 계속 흡수하지만, 흡수한 열이 온도를 높이는 데 사용되지 않고 <strong>상태 변화</strong>에 사용된다. 입자 사이의 거리를 멀게 하거나 입자 배열을 바꾸는 데 에너지가 쓰인다.</p>
+            </div>
+        </div>
+
+        <!-- 14번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">14번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 열을 <strong>방출</strong>하는 현상끼리 짝지어진 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">얼음이 녹음, 물이 끓음</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">드라이아이스가 작아짐, 나프탈렌이 사라짐</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">아이스크림이 녹음, 이슬이 맺힘</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">물이 얼음, 빨래가 마름</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">이슬이 맺힘, 성에가 생김</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p>이슬: 액화(기체→액체) → 열 방출<br>
+                성에: 승화(기체→고체) → 열 방출<br>
+                ① 둘 다 흡수, ② 둘 다 흡수, ③ 흡수+방출, ④ 방출+흡수</p>
+            </div>
+        </div>
+
+        <!-- 15번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">15번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                냉장고의 냉동실에서 음식물을 차갑게 보관할 수 있는 원리를 이용한 상태 변화는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">융해</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">응고</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">기화</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">액화</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">승화</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>냉장고 내부에서 액체 냉매가 <strong>기화</strong>할 때 주변에서 열을 흡수하여 냉장고 안을 차갑게 만든다.</p>
+            </div>
+        </div>
+
+        <!-- 16번 -->
+        <div class="question-box" data-answer="1" data-points="4">
+            <div class="q-header">
+                <span class="q-number">16번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                추운 겨울 밤 과수원에 물을 뿌려 농작물의 동해(凍害)를 막는 원리와 관련된 상태 변화는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">응고</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">융해</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">기화</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">액화</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">승화</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ①</h4>
+                <p>뿌린 물이 얼 때(<strong>응고</strong>) <strong>열을 방출</strong>하여 과일나무 주변 온도가 급격히 내려가는 것을 막는다.</p>
+            </div>
+        </div>
+
+        <!-- 17번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">17번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>증발</strong>에 대한 설명으로 옳지 <u>않은</u> 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">액체 표면에서 일어나는 기화이다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">끓는점에서만 일어난다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">온도가 높을수록 잘 일어난다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">바람이 잘 불수록 잘 일어난다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">열을 흡수하는 현상이다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p><strong>증발</strong>은 끓는점보다 낮은 온도에서도 액체 표면에서 일어나는 기화이다. <strong>끓음</strong>은 끓는점에서 액체 내부에서도 일어나는 기화이다.</p>
+            </div>
+        </div>
+
+        <!-- 18번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">18번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 상태 변화가 일어날 때 <strong>입자</strong>에 대한 설명으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">입자의 크기가 변한다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">입자의 개수가 변한다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">입자의 종류가 변한다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">입자의 배열이 변한다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">입자의 질량이 변한다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>상태 변화 시 입자의 <strong>크기, 개수, 종류, 질량</strong>은 변하지 않고, <strong>입자의 배열</strong>과 <strong>입자 사이의 거리</strong>만 변한다.</p>
+            </div>
+        </div>
+
+        <!-- 19번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">19번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                뜨거운 국을 후후 불면 빨리 식는 까닭으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">국물이 응고하면서 열을 방출하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">국물이 융해하면서 열을 흡수하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">국물이 액화하면서 열을 방출하기 때문이다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">바람이 국물의 온도를 직접 낮추기 때문이다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">국물이 증발하면서 열을 흡수하기 때문이다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p>바람을 불면 국물 표면에서 <strong>증발(기화)</strong>이 활발해지고, 기화할 때 국물에서 <strong>열을 흡수</strong>하므로 국이 빨리 식는다.</p>
+            </div>
+        </div>
+
+        <!-- 20번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">20번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 <보기>의 현상 중 상태 변화의 방향이 나머지 셋과 <u>다른</u> 하나는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">어항 속 물이 점점 줄어든다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">촉촉한 머리카락을 드라이어로 말린다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">날숨을 불면 안경에 김이 서린다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">젖은 운동화가 마른다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">염전에서 바닷물을 증발시켜 소금을 얻는다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>③은 <strong>액화</strong>(기체→액체), 나머지는 모두 <strong>기화</strong>(액체→기체)</p>
+            </div>
+        </div>
+
+        <!-- ========== 서술형 (21~25번) ========== -->
+        <div class="section-title">📝 서술형 (21~25번, 각 4점)</div>
+
+        <!-- 21번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">21번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                물질의 세 가지 상태(고체, 액체, 기체)를 입자의 배열과 운동 측면에서 비교하여 설명하시오.
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p><strong>고체</strong>: 입자가 규칙적으로 배열되어 있고, 제자리에서 진동만 한다.<br><br>
+                <strong>액체</strong>: 입자가 비교적 불규칙하게 배열되어 있고, 일정한 공간 안에서 비교적 자유롭게 움직인다.<br><br>
+                <strong>기체</strong>: 입자가 매우 불규칙하게 배열되어 있고, 매우 활발하게 자유롭게 움직인다.</p>
+            </div>
+        </div>
+
+        <!-- 22번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">22번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                물이 얼 때와 녹을 때의 부피 변화가 일반적인 물질과 다른 점을 설명하고, 그 까닭을 입자 모형으로 서술하시오.
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p>일반적인 물질은 고체→액체로 변할 때 부피가 커지지만, <strong>물은 얼 때 부피가 커지고 녹을 때 부피가 작아진다</strong>.<br><br>
+                <strong>까닭</strong>: 물이 얼 때 물 분자가 육각형 구조를 이루며 배열되어 빈 공간이 많이 생기기 때문에 부피가 커진다. 녹으면 이 구조가 깨지면서 빈 공간이 줄어들어 부피가 작아진다.</p>
+            </div>
+        </div>
+
+        <!-- 23번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">23번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                열을 흡수하는 상태 변화와 열을 방출하는 상태 변화를 각각 3가지씩 쓰시오.
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p><strong>열 흡수</strong>: 융해, 기화, 승화(고체→기체)<br><br>
+                <strong>열 방출</strong>: 응고, 액화, 승화(기체→고체)</p>
+            </div>
+        </div>
+
+        <!-- 24번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">24번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                얼음을 가열할 때 온도가 0℃에서 일정하게 유지되는 구간이 있다. 이 구간에서 열은 어디에 사용되는지 서술하시오.
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p>0℃에서 온도가 일정하게 유지되는 구간에서는 얼음이 물로 변하는 <strong>융해</strong>가 일어난다. 이때 흡수한 열은 온도를 높이는 데 사용되지 않고, <strong>입자 사이의 거리를 멀게 하거나 입자 배열을 바꾸는 상태 변화</strong>에 사용된다.</p>
+            </div>
+        </div>
+
+        <!-- 25번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">25번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 현상에서 일어나는 상태 변화의 이름과, 열의 출입을 각각 쓰시오.
+                <div class="box-info">
+                    (1) 여름철 마당에 물을 뿌리면 시원해진다.<br>
+                    (2) 겨울철 과수원에 물을 뿌려 농작물을 보호한다.
+                </div>
+            </div>
+            <textarea class="subjective-answer" placeholder="(1), (2) 각각 답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p>(1) <strong>기화</strong>(증발), 열 <strong>흡수</strong> - 물이 증발하면서 주변에서 열을 빼앗아 시원해진다.<br><br>
+                (2) <strong>응고</strong>, 열 <strong>방출</strong> - 물이 얼면서 열을 방출하여 주변 온도가 급격히 떨어지는 것을 막는다.</p>
+            </div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="btn-container">
+            <button class="btn btn-submit" onclick="submitExam()">📊 채점하기</button>
+            <button class="btn btn-show" onclick="showAllAnswers()">📖 정답 보기</button>
+            <button class="btn btn-reset" onclick="resetExam()">🔄 다시 풀기</button>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">← 과학 메인으로</a>
+        </div>
+    </div>
+
+    <script>
+        // 타이머
+        let timeLeft = 45 * 60;
+        const timerEl = document.getElementById('timer');
+        
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('시간이 종료되었습니다!');
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const min = Math.floor(timeLeft / 60);
+            const sec = timeLeft % 60;
+            timerEl.textContent = `${min}:${sec.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 300) {
+                timerEl.style.color = '#f44336';
+            }
+        }, 1000);
+
+        // 객관식 선택
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionBox = this.closest('.question-box');
+                questionBox.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // 채점
+        function submitExam() {
+            let correct = 0;
+            const objectiveQuestions = document.querySelectorAll('.question-box[data-answer]');
+            
+            objectiveQuestions.forEach(q => {
+                const answer = q.dataset.answer;
+                const selected = q.querySelector('.option.selected');
+                
+                q.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    if (opt.dataset.value === answer) {
+                        opt.classList.add('correct');
+                    }
+                });
+                
+                if (selected) {
+                    if (selected.dataset.value === answer) {
+                        correct++;
+                    } else {
+                        selected.classList.add('wrong');
+                    }
+                }
+                
+                q.querySelector('.answer-box').classList.add('show');
+            });
+
+            const score = correct * 4;
+            document.getElementById('score').textContent = score;
+            document.getElementById('obj-score').textContent = correct;
+            document.getElementById('total').textContent = score;
+            document.getElementById('result-box').classList.add('show');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 정답 보기
+        function showAllAnswers() {
+            document.querySelectorAll('.answer-box').forEach(box => box.classList.add('show'));
+            
+            document.querySelectorAll('.question-box[data-answer]').forEach(q => {
+                const answer = q.dataset.answer;
+                q.querySelectorAll('.option').forEach(opt => {
+                    if (opt.dataset.value === answer) {
+                        opt.classList.add('correct');
+                    }
+                });
+            });
+        }
+
+        // 다시 풀기
+        function resetExam() {
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'wrong');
+            });
+            document.querySelectorAll('.answer-box').forEach(box => box.classList.remove('show'));
+            document.querySelectorAll('.subjective-answer').forEach(ta => ta.value = '');
+            document.getElementById('result-box').classList.remove('show');
+            
+            timeLeft = 45 * 60;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

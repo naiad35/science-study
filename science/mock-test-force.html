@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 여러 가지 힘 - 실전 모의고사</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #4fc3f7;
+        }
+        .exam-info {
+            text-align: center;
+            background: rgba(79, 195, 247, 0.1);
+            border: 1px solid #4fc3f7;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .exam-info p { margin: 5px 0; font-size: 0.95rem; }
+        .timer {
+            font-size: 1.5rem;
+            color: #ff7043;
+            font-weight: bold;
+        }
+        .question-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4fc3f7;
+        }
+        .question-box.subjective {
+            border-left-color: #81c784;
+        }
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .q-number {
+            background: #4fc3f7;
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .q-number.subjective {
+            background: #81c784;
+        }
+        .q-points {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .option:hover {
+            background: rgba(79, 195, 247, 0.1);
+            border-color: rgba(79, 195, 247, 0.3);
+        }
+        .option.selected {
+            background: rgba(79, 195, 247, 0.2);
+            border-color: #4fc3f7;
+        }
+        .option.correct {
+            background: rgba(129, 199, 132, 0.3);
+            border-color: #81c784;
+        }
+        .option.wrong {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: #f44336;
+        }
+        .option-label {
+            background: rgba(255,255,255,0.1);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .option-text {
+            padding-top: 3px;
+            line-height: 1.5;
+        }
+        .subjective-answer {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(129, 199, 132, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 80px;
+        }
+        .subjective-answer:focus {
+            outline: none;
+            border-color: #81c784;
+        }
+        .answer-box {
+            display: none;
+            background: rgba(129, 199, 132, 0.1);
+            border: 1px solid #81c784;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .answer-box.show { display: block; }
+        .answer-box h4 {
+            color: #81c784;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .answer-box p {
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+            color: #1a1a2e;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(79, 195, 247, 0.4);
+        }
+        .btn-show {
+            background: linear-gradient(135deg, #81c784, #66bb6a);
+            color: #1a1a2e;
+        }
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .result-box {
+            display: none;
+            background: linear-gradient(135deg, rgba(79, 195, 247, 0.2), rgba(129, 199, 132, 0.2));
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-box.show { display: block; }
+        .result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+        .result-detail {
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .back-link a {
+            color: #4fc3f7;
+            text-decoration: none;
+        }
+        .box-info {
+            background: rgba(79, 195, 247, 0.1);
+            border-left: 4px solid #4fc3f7;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        .condition-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px dashed #ffc107;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: rgba(79, 195, 247, 0.2);
+        }
+        .section-title {
+            background: linear-gradient(90deg, #4fc3f7, transparent);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 30px 0 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 여러 가지 힘 - 실전 모의고사</h1>
+        
+        <div class="exam-info">
+            <p><strong>범위:</strong> 중력과 탄성력 / 마찰력과 부력 / 힘의 평형과 운동 상태 변화</p>
+            <p><strong>문항:</strong> 객관식 20문제 + 서술형 5문제 (총 25문제)</p>
+            <p><strong>시간:</strong> 45분</p>
+            <p class="timer">⏱️ <span id="timer">45:00</span></p>
+        </div>
+
+        <div id="result-box" class="result-box">
+            <div class="result-score"><span id="score">0</span>점</div>
+            <div class="result-detail">
+                객관식: <span id="obj-score">0</span>/20 | 
+                총점: <span id="total">0</span>/100
+            </div>
+        </div>
+
+        <!-- ========== 객관식 (1~20번) ========== -->
+        <div class="section-title">📝 객관식 (1~20번, 각 4점)</div>
+
+        <!-- 1번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">1번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>중력</strong>에 대한 설명으로 옳지 <u>않은</u> 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">지구가 물체를 끌어당기는 힘이다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">중력의 방향은 지구 중심 방향이다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">물체의 질량이 클수록 중력의 크기는 작아진다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">중력의 크기를 무게라고 한다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">무게의 단위로 N(뉴턴)을 사용한다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>물체의 질량이 클수록 중력의 크기(무게)는 <strong>커진다</strong>. 무게는 질량에 비례한다.</p>
+            </div>
+        </div>
+
+        <!-- 2번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">2번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                질량이 60 kg인 사람이 지구에서 달로 이동했을 때, 변하지 않는 것은?<br>
+                (단, 달에서의 중력은 지구의 약 1/6이다.)
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">무게</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">용수철저울로 측정한 값</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">중력의 크기</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">양팔저울로 측정한 값</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">가정용저울로 측정한 값</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p><strong>양팔저울</strong>은 질량을 측정하는 도구로, 질량은 장소에 관계없이 변하지 않는 물체 고유의 양이다. 용수철저울, 가정용저울은 무게를 측정하므로 달에서는 1/6로 줄어든다.</p>
+            </div>
+        </div>
+
+        <!-- 3번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">3번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 표는 지구와 달에서 어떤 물체를 측정한 결과이다.
+                <table>
+                    <tr><th>측정 장소</th><th>양팔저울</th><th>용수철저울</th></tr>
+                    <tr><td>지구</td><td>5 kg</td><td>49 N</td></tr>
+                    <tr><td>달</td><td>(가)</td><td>(나)</td></tr>
+                </table>
+                (가)와 (나)에 들어갈 값으로 옳은 것은? (단, 1 kg의 물체에 작용하는 지구의 중력은 9.8 N이다.)
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">(가) 5 kg, (나) 49 N</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">(가) 5 kg, (나) 약 8.2 N</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">(가) 약 0.83 kg, (나) 49 N</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">(가) 약 0.83 kg, (나) 약 8.2 N</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">(가) 30 kg, (나) 약 8.2 N</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>양팔저울로 측정하는 <strong>질량</strong>은 장소에 관계없이 5 kg으로 같다. 용수철저울로 측정하는 <strong>무게</strong>는 달에서 1/6이므로 49÷6≈8.2 N이다.</p>
+            </div>
+        </div>
+
+        <!-- 4번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">4번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                용수철에 물체를 매달았더니 용수철이 6 cm 늘어났다. 같은 용수철에 처음 물체의 2배 질량인 물체를 매달면 용수철은 몇 cm 늘어나는가?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">3 cm</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">6 cm</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">8 cm</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">10 cm</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">12 cm</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p>용수철이 늘어난 길이는 매단 물체의 무게(중력)에 <strong>비례</strong>한다. 질량이 2배이면 무게도 2배이므로, 늘어난 길이도 2배인 <strong>12 cm</strong>가 된다.</p>
+            </div>
+        </div>
+
+        <!-- 5번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">5번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>탄성력</strong>을 이용한 예로 적절하지 <u>않은</u> 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">양궁에서 활시위를 당겼다가 놓으면 화살이 날아간다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">트램펄린 위에서 뛰면 높이 올라간다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">자석의 같은 극끼리 밀어낸다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">볼펜 똑딱이를 누르면 다시 튀어나온다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">장대높이뛰기 선수가 장대를 이용해 높이 뛴다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>자석의 같은 극끼리 밀어내는 것은 <strong>자기력</strong>이다. 탄성력은 변형된 물체가 원래 모양으로 되돌아가려는 힘이다.</p>
+            </div>
+        </div>
+
+        <!-- 6번 -->
+        <div class="question-box" data-answer="1" data-points="4">
+            <div class="q-header">
+                <span class="q-number">6번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                용수철을 손으로 압축했을 때, 탄성력의 방향은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">손을 밀어내는 방향</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">손이 미는 방향</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">지구 중심 방향</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">위쪽 방향</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">탄성력은 방향이 없다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ①</h4>
+                <p>탄성력은 물체에 작용한 힘의 <strong>반대 방향</strong>으로 작용한다. 손으로 압축하면 손을 밀어내는 방향으로 탄성력이 작용한다.</p>
+            </div>
+        </div>
+
+        <!-- 7번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">7번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                1 N의 힘을 작용할 때 2 cm 늘어나는 용수철이 있다. 이 용수철에 가위를 매달았더니 5 cm 늘어났다. 가위의 무게는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">1.5 N</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">2 N</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">2.25 N</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">2.5 N</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">5 N</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>1 N : 2 cm = x N : 5 cm<br>x = 5 ÷ 2 = <strong>2.5 N</strong></p>
+            </div>
+        </div>
+
+        <!-- 8번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">8번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>마찰력</strong>에 대한 설명으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">마찰력은 물체의 운동 방향과 같은 방향으로 작용한다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">접촉면이 거칠수록 마찰력이 커진다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">물체의 무게가 가벼울수록 마찰력이 커진다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">마찰력은 접촉면의 넓이에 비례한다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">마찰력은 항상 일정한 크기로 작용한다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>마찰력은 운동 방향의 <strong>반대 방향</strong>으로 작용하고, 접촉면이 <strong>거칠수록</strong>, 물체의 무게가 <strong>무거울수록</strong> 커진다. 접촉면의 넓이와는 관계없다.</p>
+            </div>
+        </div>
+
+        <!-- 9번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">9번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                바닥에 놓인 10 kg짜리 상자를 20 N의 힘으로 밀었으나 상자가 움직이지 않았다. 이때 상자에 작용하는 마찰력의 크기는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">0 N</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">10 N</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">20 N</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">98 N</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">알 수 없다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>물체가 움직이지 않을 때, 마찰력의 크기는 작용한 힘의 크기와 <strong>같다</strong>. 따라서 마찰력은 20 N이다.</p>
+            </div>
+        </div>
+
+        <!-- 10번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">10번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>마찰력을 크게</strong> 하여 이용하는 경우가 아닌 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">겨울철 자동차 타이어에 체인을 감는다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">체조 선수가 손에 송진 가루를 바른다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">야구 선수가 스파이크를 신는다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">미끄럼 방지 양말을 신는다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">자전거 체인에 기름을 바른다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p>자전거 체인에 기름을 바르는 것은 마찰력을 <strong>줄이기</strong> 위한 것이다. 나머지는 모두 마찰력을 크게 하는 경우이다.</p>
+            </div>
+        </div>
+
+        <!-- 11번 -->
+        <div class="question-box" data-answer="1" data-points="4">
+            <div class="q-header">
+                <span class="q-number">11번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                무게가 5 N인 추를 용수철저울에 매달아 물속에 넣었더니 용수철저울의 눈금이 3.5 N을 가리켰다. 추에 작용하는 부력의 크기는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">1.5 N</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">3.5 N</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">5 N</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">8.5 N</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">알 수 없다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ①</h4>
+                <p>부력 = 공기 중 무게 - 물속에서 무게 = 5 N - 3.5 N = <strong>1.5 N</strong></p>
+            </div>
+        </div>
+
+        <!-- 12번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">12번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>부력</strong>에 대한 설명으로 옳지 <u>않은</u> 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">부력의 방향은 중력의 반대 방향이다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">물속에 잠긴 부피가 클수록 부력이 커진다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">물 위에 떠 있는 물체에는 중력과 부력이 같은 크기로 작용한다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">물체가 물속에 완전히 가라앉으면 부력이 작용하지 않는다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">부력의 크기는 물체가 밀어낸 물의 무게와 같다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>물체가 가라앉아 있어도 부력은 <strong>항상 작용</strong>한다. 단지 부력이 중력보다 작아서 가라앉은 것이다.</p>
+            </div>
+        </div>
+
+        <!-- 13번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">13번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                질량이 같은 쇠뭉치와 쇠로 만든 배가 있다. 쇠뭉치는 물에 가라앉고 쇠로 만든 배는 물에 뜨는 까닭은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">배에 작용하는 중력이 더 작기 때문이다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">배의 부피가 더 커서 받는 부력이 더 크기 때문이다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">쇠뭉치가 더 무겁기 때문이다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">배에는 부력이 작용하지 않기 때문이다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">쇠뭉치에는 중력이 더 크게 작용하기 때문이다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>질량이 같으면 무게(중력)도 같다. 하지만 배는 부피가 커서 밀어내는 물의 양이 많으므로 <strong>부력이 더 크게</strong> 작용하여 뜰 수 있다.</p>
+            </div>
+        </div>
+
+        <!-- 14번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">14번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                두 힘이 한 물체에 작용할 때 <strong>힘의 평형</strong>이 이루어지기 위한 조건으로 옳은 것을 모두 고르면?
+                <div class="box-info">
+                    ㄱ. 두 힘의 크기가 같아야 한다.<br>
+                    ㄴ. 두 힘의 방향이 같아야 한다.<br>
+                    ㄷ. 두 힘이 한 직선상에 있어야 한다.
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">ㄱ</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">ㄱ, ㄴ</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">ㄱ, ㄷ</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">ㄴ, ㄷ</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">ㄱ, ㄴ, ㄷ</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>힘의 평형 조건: ① 두 힘의 크기가 같고, ② 두 힘의 방향이 <strong>반대</strong>이고, ③ 두 힘이 한 직선상에 있어야 한다.</p>
+            </div>
+        </div>
+
+        <!-- 15번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">15번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                오른쪽으로 5 N, 왼쪽으로 3 N의 힘이 한 물체에 동시에 작용할 때, 알짜힘의 크기와 방향은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">8 N, 오른쪽</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">2 N, 오른쪽</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">2 N, 왼쪽</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">8 N, 왼쪽</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">0 N</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>반대 방향의 두 힘의 합력 = 큰 힘 - 작은 힘 = 5 N - 3 N = <strong>2 N</strong>, 방향은 큰 힘의 방향인 <strong>오른쪽</strong>이다.</p>
+            </div>
+        </div>
+
+        <!-- 16번 -->
+        <div class="question-box" data-answer="4" data-points="4">
+            <div class="q-header">
+                <span class="q-number">16번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                책상 위에 정지해 있는 책에 작용하는 힘에 대한 설명으로 옳은 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">책에는 아무런 힘도 작용하지 않는다.</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">책에는 중력만 작용한다.</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">책상이 책을 미는 힘이 중력보다 크다.</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">중력과 책상이 책을 떠받치는 힘이 평형을 이루고 있다.</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">책에 작용하는 알짜힘은 아래 방향이다.</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ④</h4>
+                <p>정지해 있는 물체에는 힘이 작용하지 않거나, 여러 힘이 <strong>평형</strong>을 이루고 있다. 책에는 아래로 중력, 위로 책상이 떠받치는 힘(수직 항력)이 작용하며 두 힘이 평형이다.</p>
+            </div>
+        </div>
+
+        <!-- 17번 -->
+        <div class="question-box" data-answer="5" data-points="4">
+            <div class="q-header">
+                <span class="q-number">17번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 <strong>알짜힘이 0이 아닌</strong> 경우는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">수평면에서 등속으로 움직이는 자동차</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">물 위에 떠서 정지해 있는 배</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">천장에 매달려 정지해 있는 전등</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">책상 위에 놓인 책</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">언덕을 내려가며 속력이 빨라지는 자전거</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ⑤</h4>
+                <p>속력이 빨라지는 것은 <strong>운동 상태가 변하는</strong> 것이므로 알짜힘이 0이 아니다. 정지해 있거나 등속 운동하는 물체는 알짜힘이 0이다.</p>
+            </div>
+        </div>
+
+        <!-- 18번 -->
+        <div class="question-box" data-answer="1" data-points="4">
+            <div class="q-header">
+                <span class="q-number">18번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                달리던 버스가 급정거할 때 승객이 앞으로 쏠리는 현상을 설명하는 것은?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">관성</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">탄성</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">중력</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">마찰력</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">부력</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ①</h4>
+                <p><strong>관성</strong>: 물체가 현재의 운동 상태를 유지하려는 성질. 버스가 멈춰도 승객의 몸은 계속 앞으로 가려고 하므로 앞으로 쏠린다.</p>
+            </div>
+        </div>
+
+        <!-- 19번 -->
+        <div class="question-box" data-answer="3" data-points="4">
+            <div class="q-header">
+                <span class="q-number">19번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 중 운동 방향과 힘의 방향이 <strong>같은</strong> 경우는?
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">던져 올린 공이 올라가는 동안</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">자전거가 브레이크를 밟아 멈추는 동안</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">높은 곳에서 떨어지는 공</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">내리막길에서 브레이크를 밟은 자동차</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">등속으로 달리는 기차</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ③</h4>
+                <p>떨어지는 공은 아래 방향으로 운동하고, 중력도 아래 방향이므로 <strong>운동 방향과 힘의 방향이 같다</strong> → 속력 증가. ①은 운동↑ 힘↓로 속력 감소.</p>
+            </div>
+        </div>
+
+        <!-- 20번 -->
+        <div class="question-box" data-answer="2" data-points="4">
+            <div class="q-header">
+                <span class="q-number">20번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 <보기>의 운동 중 힘의 방향이 계속 변하여 <strong>운동 방향이 변하는</strong> 운동을 모두 고른 것은?
+                <div class="box-info">
+                    ㄱ. 수평면에서 등속 직선 운동하는 자동차<br>
+                    ㄴ. 원형 트랙을 도는 롤러코스터<br>
+                    ㄷ. 그네를 타는 아이<br>
+                    ㄹ. 비스듬히 던진 공
+                </div>
+            </div>
+            <div class="options">
+                <div class="option" data-value="1">
+                    <span class="option-label">①</span>
+                    <span class="option-text">ㄱ, ㄴ</span>
+                </div>
+                <div class="option" data-value="2">
+                    <span class="option-label">②</span>
+                    <span class="option-text">ㄴ, ㄷ, ㄹ</span>
+                </div>
+                <div class="option" data-value="3">
+                    <span class="option-label">③</span>
+                    <span class="option-text">ㄱ, ㄷ, ㄹ</span>
+                </div>
+                <div class="option" data-value="4">
+                    <span class="option-label">④</span>
+                    <span class="option-text">ㄴ, ㄹ</span>
+                </div>
+                <div class="option" data-value="5">
+                    <span class="option-label">⑤</span>
+                    <span class="option-text">ㄱ, ㄴ, ㄷ, ㄹ</span>
+                </div>
+            </div>
+            <div class="answer-box">
+                <h4>✅ 정답: ②</h4>
+                <p>ㄴ. 원운동(방향 계속 변화), ㄷ. 왕복 운동(방향 변화), ㄹ. 포물선 운동(방향 변화). ㄱ은 등속 직선 운동으로 방향 변화 없음.</p>
+            </div>
+        </div>
+
+        <!-- ========== 서술형 (21~25번) ========== -->
+        <div class="section-title">📝 서술형 (21~25번, 각 4점)</div>
+
+        <!-- 21번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">21번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                <strong>질량</strong>과 <strong>무게</strong>의 차이점을 측정 도구, 단위, 장소에 따른 변화를 포함하여 서술하시오.
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p><strong>질량</strong>은 물체 고유의 양으로, 양팔저울로 측정하며 단위는 kg을 사용하고 장소에 따라 변하지 않는다.<br><br>
+                <strong>무게</strong>는 물체에 작용하는 중력의 크기로, 용수철저울이나 가정용저울로 측정하며 단위는 N을 사용하고 장소(중력의 크기)에 따라 변한다.</p>
+            </div>
+        </div>
+
+        <!-- 22번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">22번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                그림과 같이 2 N의 힘을 작용할 때 4 cm 늘어나는 용수철이 있다. 이 용수철에 무게를 모르는 물체를 매달았더니 10 cm 늘어났다.
+                <div class="box-info">
+                    물체의 무게를 구하는 과정과 답을 쓰시오.
+                </div>
+            </div>
+            <textarea class="subjective-answer" placeholder="풀이 과정과 답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p><strong>풀이:</strong> 용수철이 늘어난 길이는 작용한 힘에 비례한다.<br>
+                2 N : 4 cm = x N : 10 cm<br>
+                4x = 20<br>
+                x = 5<br><br>
+                <strong>답:</strong> 5 N</p>
+            </div>
+        </div>
+
+        <!-- 23번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">23번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                물고기가 부레의 크기를 조절하여 물속에서 뜨거나 가라앉을 수 있는 원리를 <strong>부력</strong>과 <strong>중력</strong>을 사용하여 설명하시오.
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p>물고기가 부레에 공기를 넣어 <strong>부피를 크게</strong> 하면 물에 잠긴 부피가 커져서 <strong>부력이 증가</strong>하여 중력보다 커지면 <strong>떠오른다</strong>.<br><br>
+                반대로 부레에서 공기를 빼면 부피가 작아져 부력이 감소하고, 중력보다 작아지면 <strong>가라앉는다</strong>.</p>
+            </div>
+        </div>
+
+        <!-- 24번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">24번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 두 상황에서 물체의 운동 상태가 어떻게 변하는지 서술하시오.
+                <div class="box-info">
+                    (1) 운동 방향과 힘의 방향이 같을 때<br>
+                    (2) 운동 방향과 힘의 방향이 반대일 때
+                </div>
+            </div>
+            <textarea class="subjective-answer" placeholder="답을 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p>(1) 운동 방향과 힘의 방향이 <strong>같으면</strong> 물체의 <strong>속력이 빨라진다</strong>. (예: 떨어지는 물체)<br><br>
+                (2) 운동 방향과 힘의 방향이 <strong>반대이면</strong> 물체의 <strong>속력이 느려진다</strong>. (예: 위로 던진 공이 올라가는 동안)</p>
+            </div>
+        </div>
+
+        <!-- 25번 서술형 -->
+        <div class="question-box subjective" data-points="4">
+            <div class="q-header">
+                <span class="q-number subjective">25번</span>
+                <span class="q-points">4점</span>
+            </div>
+            <div class="q-text">
+                다음 표는 여러 가지 힘을 정리한 것이다. (가)~(다)에 알맞은 내용을 쓰시오.
+                <table>
+                    <tr><th>힘의 종류</th><th>힘의 방향</th><th>영향을 주는 요인</th></tr>
+                    <tr><td>중력</td><td>(가)</td><td>질량</td></tr>
+                    <tr><td>탄성력</td><td>작용한 힘의 반대 방향</td><td>(나)</td></tr>
+                    <tr><td>마찰력</td><td>(다)</td><td>접촉면의 거칠기, 무게</td></tr>
+                </table>
+            </div>
+            <textarea class="subjective-answer" placeholder="(가), (나), (다)를 입력하세요..."></textarea>
+            <div class="answer-box">
+                <h4>✅ 모범 답안</h4>
+                <p>(가) <strong>지구 중심 방향</strong> (또는 아래 방향)<br>
+                (나) <strong>변형된 정도</strong> (또는 늘어난/줄어든 길이)<br>
+                (다) <strong>운동 방향의 반대 방향</strong> (또는 작용한 힘의 반대 방향)</p>
+            </div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="btn-container">
+            <button class="btn btn-submit" onclick="submitExam()">📊 채점하기</button>
+            <button class="btn btn-show" onclick="showAllAnswers()">📖 정답 보기</button>
+            <button class="btn btn-reset" onclick="resetExam()">🔄 다시 풀기</button>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">← 과학 메인으로</a>
+        </div>
+    </div>
+
+    <script>
+        // 타이머
+        let timeLeft = 45 * 60;
+        const timerEl = document.getElementById('timer');
+        
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('시간이 종료되었습니다!');
+                submitExam();
+                return;
+            }
+            timeLeft--;
+            const min = Math.floor(timeLeft / 60);
+            const sec = timeLeft % 60;
+            timerEl.textContent = `${min}:${sec.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 300) {
+                timerEl.style.color = '#f44336';
+            }
+        }, 1000);
+
+        // 객관식 선택
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionBox = this.closest('.question-box');
+                questionBox.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // 채점
+        function submitExam() {
+            let correct = 0;
+            const objectiveQuestions = document.querySelectorAll('.question-box[data-answer]');
+            
+            objectiveQuestions.forEach(q => {
+                const answer = q.dataset.answer;
+                const selected = q.querySelector('.option.selected');
+                
+                q.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    if (opt.dataset.value === answer) {
+                        opt.classList.add('correct');
+                    }
+                });
+                
+                if (selected) {
+                    if (selected.dataset.value === answer) {
+                        correct++;
+                    } else {
+                        selected.classList.add('wrong');
+                    }
+                }
+                
+                q.querySelector('.answer-box').classList.add('show');
+            });
+
+            const score = correct * 4;
+            document.getElementById('score').textContent = score;
+            document.getElementById('obj-score').textContent = correct;
+            document.getElementById('total').textContent = score;
+            document.getElementById('result-box').classList.add('show');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 정답 보기
+        function showAllAnswers() {
+            document.querySelectorAll('.answer-box').forEach(box => box.classList.add('show'));
+            
+            document.querySelectorAll('.question-box[data-answer]').forEach(q => {
+                const answer = q.dataset.answer;
+                q.querySelectorAll('.option').forEach(opt => {
+                    if (opt.dataset.value === answer) {
+                        opt.classList.add('correct');
+                    }
+                });
+            });
+        }
+
+        // 다시 풀기
+        function resetExam() {
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'wrong');
+            });
+            document.querySelectorAll('.answer-box').forEach(box => box.classList.remove('show'));
+            document.querySelectorAll('.subjective-answer').forEach(ta => ta.value = '');
+            document.getElementById('result-box').classList.remove('show');
+            
+            timeLeft = 45 * 60;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
